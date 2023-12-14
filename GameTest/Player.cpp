@@ -2,7 +2,7 @@
 #include "Player.h"
 #include "app/app.h"
 
-Player::Player() {
+Player:: Player() : isJumping(false), jumpDuration(500.0f), jumpTimer(0.0f) {
     testSprite = App::CreateSprite(".\\TestData\\Test.bmp", 8, 4);
     testSprite->SetPosition(400.0f, 400.0f);
     float speed = 1.0f / 15.0f;
@@ -17,7 +17,7 @@ Player :: ~Player() {
     delete testSprite;
 }
 
-void Player::Run(float deltaTime) {
+void Player::Walk (float deltaTime) {
     testSprite->Update(deltaTime);
 
     if (App::GetController().GetLeftThumbStickX() > 0.5f) {
@@ -36,6 +36,9 @@ void Player::Run(float deltaTime) {
         testSprite->SetPosition(x, y);
     }
 
+    //-------------------------------------------------------
+    //per ora non mi serve che vadano su e giù, ma dopo non so
+    /* 
     if (App::GetController().GetLeftThumbStickY() > 0.5f) {
         testSprite->SetAnimation(ANIM_FORWARDS);
         float x, y;
@@ -43,7 +46,8 @@ void Player::Run(float deltaTime) {
         y += 1.0f;
         testSprite->SetPosition(x, y);
     }
-
+    */
+    /*
     if (App::GetController().GetLeftThumbStickY() < -0.5f) {
         testSprite->SetAnimation(ANIM_BACKWARDS);
         float x, y;
@@ -51,4 +55,6 @@ void Player::Run(float deltaTime) {
         y -= 1.0f;
         testSprite->SetPosition(x, y);
     }
+    */
 }
+
