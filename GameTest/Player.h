@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include "app/app.h"
+#include "Physics.h"
 
 enum
 {
@@ -15,12 +16,17 @@ enum
 class Player {
 
 public:
+    float x, y;       // Player position
+    float velocityY;  // Vertical velocity
+    bool isJumping;  
+    float jumpVelocity;
+
     Player();
     ~Player();
 
-    CSimpleSprite* testSprite;
     void Run(float deltaTime);
     void Jump(float deltaTime);
+    CSimpleSprite* testSprite;
 
 };
 

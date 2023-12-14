@@ -2,9 +2,9 @@
 #include "Player.h"
 #include "app/app.h"
 
-Player::Player() {
+Player::Player() : isJumping(false), x(400.0f), y(400.0f), velocityY(0.0f), jumpVelocity(5.0f) {
     testSprite = App::CreateSprite(".\\TestData\\Test.bmp", 8, 4);
-    testSprite->SetPosition(400.0f, 400.0f);
+    testSprite->SetPosition(x, y);
     float speed = 1.0f / 15.0f;
     testSprite->CreateAnimation(ANIM_BACKWARDS, speed, { 0,1,2,3,4,5,6,7 });
     testSprite->CreateAnimation(ANIM_LEFT, speed, { 8,9,10,11,12,13,14,15 });
@@ -18,11 +18,11 @@ Player :: ~Player() {
 }
 
 void Player::Run(float deltaTime) {
+    Physics::ApplyGravity(y, velocityY, deltaTime, 9.0f);
     testSprite->Update(deltaTime);
 
     if (App::GetController().GetLeftThumbStickX() > 0.5f) {
         testSprite->SetAnimation(ANIM_RIGHT);
-        float x, y;
         testSprite->GetPosition(x, y);
         x += 1.0f;
         testSprite->SetPosition(x, y);
@@ -30,7 +30,6 @@ void Player::Run(float deltaTime) {
 
     if (App::GetController().GetLeftThumbStickX() < -0.5f) {
         testSprite->SetAnimation(ANIM_LEFT);
-        float x, y;
         testSprite->GetPosition(x, y);
         x -= 1.0f;
         testSprite->SetPosition(x, y);
@@ -38,7 +37,6 @@ void Player::Run(float deltaTime) {
 
     if (App::GetController().GetLeftThumbStickY() > 0.5f) {
         testSprite->SetAnimation(ANIM_FORWARDS);
-        float x, y;
         testSprite->GetPosition(x, y);
         y += 1.0f;
         testSprite->SetPosition(x, y);
@@ -46,9 +44,25 @@ void Player::Run(float deltaTime) {
 
     if (App::GetController().GetLeftThumbStickY() < -0.5f) {
         testSprite->SetAnimation(ANIM_BACKWARDS);
-        float x, y;
         testSprite->GetPosition(x, y);
         y -= 1.0f;
         testSprite->SetPosition(x, y);
     }
+
+    if (App::GetController().GetLeftThumbStickY() && !isJumping) {
+        testSprite->SetAnimation(ANIM_BACKWARDS);
+        testSprite->GetPosition(x, y);
+        Jump(deltaTime);
+        testSprite->SetPosition(x, y);
+   
+    }
+
 }
+
+void Player::Jump(float deltaTime) {
+    velocityY += jumpVelocity;
+    isJumping = true;
+    y += velocityY * deltaTime;
+    isJumping = false;
+}
+
