@@ -11,6 +11,7 @@
 #include "Physics.h"
 #include "LevelBuilder.h"
 #include "FileReader.h"
+#include "BackgroundBuilder.h"
 
 //------------------------------------------------------------------------
 std::unique_ptr<Player> playerPtr;
