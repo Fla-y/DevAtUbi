@@ -3,7 +3,7 @@
 #include <iostream>
 #include <fstream>
 
-//costructor
+
 FileReader::FileReader(const std::string& filename) : filename(filename) {}
 
 
@@ -16,7 +16,6 @@ std::vector<char> FileReader::fileReaderMethod() {
         exit(1);
     }
 
-    // Read the file character by character
     char c;
     while (file.get(c)) {
         fileContents.push_back(c);

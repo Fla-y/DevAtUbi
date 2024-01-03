@@ -1,41 +1,47 @@
 #include "stdafx.h"
 #include "LevelBuilder.h"
 #include "app\app.h"
+#include "FileReader.h" // Your file reading class
 
+LevelBuilder::LevelBuilder() : currentLevelIndex(0) {
+    // Initialize with paths to level files
+    levelFilePaths = { "level1.txt", "level2.txt", "level3.txt" }; // and so on
+}
 
-LevelBuilder::LevelBuilder(const std::vector<char>& fileContents) : loadNextLevel(false) {
+void LevelBuilder::LoadLevel(const std::string& filePath) {
+    FileReader levelFile(filePath);
+    std::vector<char> fileContents = levelFile.fileReaderMethod();
+    ParseLevelData(fileContents);
+}
 
-    level.resize(10, std::vector<int>(fileContents.size(), 0));
-    for (size_t i = 0; i < fileContents.size(); ++i) {
-        char c = fileContents[i];
-
+void LevelBuilder::ParseLevelData(const std::vector<char>& levelData) {
+    // Interpret the characters and construct the level accordingly
+    // E.g., '1' for normal ground level, '@' for triggering next level load
+    // Translate these characters into game world coordinates or objects
+    for (char c : levelData) {
         if (c == '1') {
-            level.back()[i] = 25;
+            // Handle normal ground level placement
+        }
+        else if (c == '2') {
+            // Handle other types of ground or objects
+        }
+        else if (c == '3') {
+            // And so on for other characters
         }
         else if (c == '@') {
-            loadNextLevel = true;
+            // This character signifies the need to load the next part of the level
+            // You might set a flag here to indicate that the next level should be loaded
         }
+        // Add more conditions as needed for different characters
     }
 }
 
-void LevelBuilder::BuildLevel(const std::vector<char>& fileContents, const std::vector<std::vector<int>>& levelData) {
-    for (size_t i = 0; i < fileContents.size(); ++i) {
-        char c = fileContents[i];
-        for (size_t j = 0; j < levelData[i].size(); ++j) {
-            if (levelData[i][j] == 1) {
-                level.back()[i] = 25;
-            }
-            else if (c == '@') {
-                loadNextLevel = true;
-            }
-        }
-    }
+void LevelBuilder::RenderLevel() {
+    // Render the level elements
 }
 
-const std::vector<std::vector<int>>& LevelBuilder::GetLevel() const {
-    return level;
-}
-
-bool LevelBuilder::ShouldLoadNextLevel() const {
-    return loadNextLevel;
-}
+/*
+bool LevelBuilder::NeedToLoadNextLevel() const {
+    // Determine if the '@' character was encountered and the next level should be loaded
+   // return (currentLevelIndex < levelFilePaths.size() - 1)&& /* condition to switch level *;
+}*/

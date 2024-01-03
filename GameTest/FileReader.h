@@ -1,15 +1,12 @@
 #ifndef FILEREADER_H
 #define FILEREADER_H
 
-#include <string>
-#include <vector>
+#include "stdafx.h"
 
 class FileReader {
 public:
-    // Constructor takes filename as an argument
-    FileReader(const std::string& filename);
 
-    // Function to read the file and return a vector of characters
+    FileReader(const std::string& filename);
     std::vector<char> fileReaderMethod();
 
 private:

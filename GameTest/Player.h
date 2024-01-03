@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include "app/app.h"
+#include "Physics.h"
 
 enum
 {
@@ -10,25 +11,23 @@ enum
     ANIM_BACKWARDS,
     ANIM_LEFT,
     ANIM_RIGHT,
-    ANIM_JUMP,
 };
 
 class Player {
 
 public:
+    float x, y;       // Player position
+    float velocityY;  // Vertical velocity
+    bool isJumping;  
+    float jumpVelocity;
+
     Player();
     ~Player();
 
-    CSimpleSprite* testSprite;
-    void Walk(float deltaTime);
+    void Run(float deltaTime);
     void Jump(float deltaTime);
+    CSimpleSprite* testSprite;
 
-private:
-    bool isJumping;  // Flag to track if the player is currently jumping
-    float jumpDuration;  // Total duration of the jump animation
-    float jumpTimer;  // Timer to track the current position in the jump animation
-
-    void Move(float offsetX, float offsetY);  // Helper method for movement
 };
 
 #endif

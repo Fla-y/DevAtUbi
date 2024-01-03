@@ -22,8 +22,10 @@
       <Filter>stb_image</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Physics.cpp" />
     <ClCompile Include="FileReader.cpp" />
     <ClCompile Include="LevelBuilder.cpp" />
+    <ClCompile Include="BackgroundBuilder.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -52,8 +54,10 @@
       <Filter>stb_image</Filter>
     </ClInclude>
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Physics.h" />
     <ClInclude Include="FileReader.h" />
     <ClInclude Include="LevelBuilder.h" />
+    <ClInclude Include="BackgroundBuilder.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="NextAPI">

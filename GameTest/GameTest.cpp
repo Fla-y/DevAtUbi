@@ -8,29 +8,24 @@
 //------------------------------------------------------------------------
 #include "app\app.h"
 #include "Player.h"
+#include "Physics.h"
 #include "LevelBuilder.h"
 #include "FileReader.h"
+#include "BackgroundBuilder.h"
 
 //------------------------------------------------------------------------
 std::unique_ptr<Player> playerPtr;
 std::vector<std::vector<int>> levelData;
+std::unique_ptr<BackgroundBuilder> myBackgroundBuilder;
+
+
 //------------------------------------------------------------------------
 // Called before first update. Do any initial setup here.
 //------------------------------------------------------------------------
 void Init()
 {
-	// Read the level file and build the level
-	std::string filePath = ".\\level1.txt";
-	FileReader levelFile (filePath);
-	std::vector<char> fileContents = levelFile.fileReaderMethod();
-
-	LevelBuilder levelBuilder(fileContents);
-	levelBuilder.BuildLevel(fileContents,levelData);
-
-	// Retrieve the level data
-	levelData = levelBuilder.GetLevel();
+	myBackgroundBuilder = std::make_unique<BackgroundBuilder>();
 	playerPtr = std::make_unique <Player>();
-
 }
 
 //------------------------------------------------------------------------
@@ -39,10 +34,7 @@ void Init()
 //------------------------------------------------------------------------
 void Update(float deltaTime)
 {
-	//------------------------------------------------------------------------
-	// Example Sprite Code....
-	playerPtr->Walk(deltaTime);
-	//playerPtr->Jump(deltaTime);
+	playerPtr->Run(deltaTime);
 	//------------------------------------------------------------------------
 	// Sample Sound.
 	//------------------------------------------------------------------------
@@ -57,16 +49,17 @@ void Update(float deltaTime)
 // See App.h 
 //------------------------------------------------------------------------
 void Render()
-{	
-	//------------------------------------------------------------------------
-	// Example Sprite Code....
+{
+	if (myBackgroundBuilder) {
+		myBackgroundBuilder->Draw();
+	}
 	playerPtr->testSprite->Draw();
 	//------------------------------------------------------------------------
 
 	//------------------------------------------------------------------------
 	// Example Text.
 	//------------------------------------------------------------------------
-	//App::Print(100, 100, "Sample Text");
+	App::Print(100, 100, "Sample Text");
 
 	
 }
