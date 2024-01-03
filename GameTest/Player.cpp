@@ -2,7 +2,7 @@
 #include "Player.h"
 #include "app/app.h"
 
-Player::Player() : isJumping(false), x(400.0f), y(400.0f), velocityY(0.0f), jumpVelocity(5.0f) {
+Player::Player() : isJumping(false), x(400.0f), y(400.0f), velocityY(0.0f), jumpVelocity(0.2f) {
     testSprite = App::CreateSprite(".\\TestData\\Test.bmp", 8, 4);
     testSprite->SetPosition(x, y);
     float speed = 1.0f / 15.0f;
@@ -18,7 +18,7 @@ Player :: ~Player() {
 }
 
 void Player::Run(float deltaTime) {
-    Physics::ApplyGravity(y, velocityY, deltaTime, 9.0f);
+    
     testSprite->Update(deltaTime);
 
     if (App::GetController().GetLeftThumbStickX() > 0.5f) {
