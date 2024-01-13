@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "app/app.h"
 #include "Physics.h"
+#include "AnimationManager.h"
 
 enum
 {
@@ -20,13 +21,17 @@ public:
     float velocityY;  // Vertical velocity
     bool isJumping;  
     float jumpVelocity;
+    AnimationManager animManager;
 
     Player();
     ~Player();
 
     void Run(float deltaTime);
     void Jump(float deltaTime);
-    CSimpleSprite* testSprite;
+    CSimpleSprite* sprite;
+
+private:
+    void ReturnToIdle();
 
 };
 

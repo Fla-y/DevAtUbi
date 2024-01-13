@@ -1,11 +1,12 @@
 #include "stdafx.h"
+#include "filePath.h"
 #include "BackgroundBuilder.h"
 
-const std::string BackgroundBuilder::BACKGROUND_FILE_PATH = ".\\TestData\\background.png";
 
 BackgroundBuilder::BackgroundBuilder() {
     // Create the sprite with 1 column and 1 row since it's a single image
-    myBackgroundSprite = std::make_unique<CSimpleSprite>(BACKGROUND_FILE_PATH.c_str(), 1, 1);
+    std::string backgroundPathString = BACKGROUND.string();
+    myBackgroundSprite = std::make_unique<CSimpleSprite>(backgroundPathString.c_str(), 1, 1);
 
     // In virtual coordinates, this should place it at the middle of the screen
     myBackgroundSprite->SetPosition(APP_VIRTUAL_WIDTH * 0.5f, APP_VIRTUAL_HEIGHT * 0.5f);

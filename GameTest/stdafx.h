@@ -14,3 +14,8 @@
 #include <memory> 
 #include <vector>
 #include <string>
+#include <algorithm>
+#include <map>
+#include <cassert>
+#include <filesystem>
+#define NOMINMAX   

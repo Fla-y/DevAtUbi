@@ -53,7 +53,7 @@ void Render()
 	if (myBackgroundBuilder) {
 		myBackgroundBuilder->Draw();
 	}
-	playerPtr->testSprite->Draw();
+	playerPtr->sprite->Draw();
 	//------------------------------------------------------------------------
 
 	//------------------------------------------------------------------------
