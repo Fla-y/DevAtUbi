@@ -12,11 +12,16 @@
 #include "LevelBuilder.h"
 #include "FileReader.h"
 #include "BackgroundBuilder.h"
+#include "AnimationManager.h"
+#include "LogUtility.h"
 
 //------------------------------------------------------------------------
 std::unique_ptr<Player> playerPtr;
 std::vector<std::vector<int>> levelData;
 std::unique_ptr<BackgroundBuilder> myBackgroundBuilder;
+
+LogUtility logger("game_log.txt", "critical_log.txt");
+AnimationManager animManager;
 
 
 //------------------------------------------------------------------------
@@ -24,8 +29,9 @@ std::unique_ptr<BackgroundBuilder> myBackgroundBuilder;
 //------------------------------------------------------------------------
 void Init()
 {
+	animManager.InitializePlayer();
 	myBackgroundBuilder = std::make_unique<BackgroundBuilder>();
-	playerPtr = std::make_unique <Player>();
+	playerPtr = std::make_unique <Player>(logger, animManager);
 }
 
 //------------------------------------------------------------------------
@@ -34,7 +40,7 @@ void Init()
 //------------------------------------------------------------------------
 void Update(float deltaTime)
 {
-	playerPtr->Run(deltaTime);
+	playerPtr->Move(deltaTime);
 	//------------------------------------------------------------------------
 	// Sample Sound.
 	//------------------------------------------------------------------------
@@ -59,7 +65,7 @@ void Render()
 	//------------------------------------------------------------------------
 	// Example Text.
 	//------------------------------------------------------------------------
-	App::Print(100, 100, "Sample Text");
+	//App::Print(100, 100, "Sample Text");
 
 	
 }

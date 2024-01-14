@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "FileReader.h"
-#include <iostream>
-#include <fstream>
+
 
 
 FileReader::FileReader(const std::string& filename) : filename(filename) {}

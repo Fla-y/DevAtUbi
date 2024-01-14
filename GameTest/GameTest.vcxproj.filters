@@ -26,6 +26,8 @@
     <ClCompile Include="FileReader.cpp" />
     <ClCompile Include="LevelBuilder.cpp" />
     <ClCompile Include="BackgroundBuilder.cpp" />
+    <ClCompile Include="AnimationManager.cpp" />
+    <ClCompile Include="LogUtility.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -58,6 +60,9 @@
     <ClInclude Include="FileReader.h" />
     <ClInclude Include="LevelBuilder.h" />
     <ClInclude Include="BackgroundBuilder.h" />
+    <ClInclude Include="AnimationManager.h" />
+    <ClInclude Include="filePath.h" />
+    <ClInclude Include="LogUtility.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="NextAPI">

@@ -5,6 +5,7 @@
 #include "app/app.h"
 #include "Physics.h"
 #include "AnimationManager.h"
+#include "LogUtility.h"
 
 enum
 {
@@ -21,16 +22,18 @@ public:
     float velocityY;  // Vertical velocity
     bool isJumping;  
     float jumpVelocity;
-    AnimationManager animManager;
 
-    Player();
+    Player(LogUtility& logger, AnimationManager& animManager);
     ~Player();
 
-    void Run(float deltaTime);
+    void Move(float deltaTime);
     void Jump(float deltaTime);
     CSimpleSprite* sprite;
 
 private:
+    LogUtility& logger;
+    AnimationManager& animManager;
+
     void ReturnToIdle();
 
 };

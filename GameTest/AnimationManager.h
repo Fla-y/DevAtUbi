@@ -26,6 +26,7 @@ public:
 	~AnimationManager();
 
 	CSimpleSprite* GetSprite();
+	void InitializePlayer();
 
 private:
 
@@ -35,7 +36,6 @@ private:
 		float speed = 0;
 		std::vector<int> frameSequence;
 	};
-	void InitializePlayer();
 	CSimpleSprite* player;
 	//std::map<PlayerAnimation, AnimationData> playerAnimation;
 	

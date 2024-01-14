@@ -2,8 +2,12 @@
 #include "Player.h"
 #include "app/app.h"
 
-Player::Player() : isJumping(false), x(400.0f), y(400.0f), velocityY(0.0f), jumpVelocity(0.2f) {
+Player::Player(LogUtility& logger, AnimationManager& animManager) : logger(logger), animManager(animManager), isJumping(false), x(400.0f), y(400.0f), velocityY(0.0f), jumpVelocity(0.2f) {
     sprite=animManager.GetSprite();
+    if (sprite == nullptr) {
+        std::cerr << "Error: Failed to initialize player character." << std::endl;
+        logger.LogCriticalError("Player character initialization failed.");
+    }
     sprite->SetAnimation(static_cast<int>(PlayerAnimation::IDLE));
 }
 
@@ -14,7 +18,7 @@ void Player::ReturnToIdle() {
     sprite->SetAnimation(static_cast<int>(PlayerAnimation::IDLE));
 }
 
-void Player::Run(float deltaTime) {
+void Player::Move(float deltaTime) {
     
     sprite->Update(deltaTime);
 
@@ -23,17 +27,15 @@ void Player::Run(float deltaTime) {
         sprite->GetPosition(x, y);
         x += 1.0f;
         sprite->SetPosition(x, y);
-        if (!(App::GetController().GetLeftThumbStickX() > 0.5f)) {
-            ReturnToIdle();
-        }
     }
-
-    if (App::GetController().GetLeftThumbStickX() < -0.5f) {
+    else if (App::GetController().GetLeftThumbStickX() < -0.5f) {
         sprite->SetAnimation(static_cast<int>(PlayerAnimation::WALK_BACK));
         sprite->GetPosition(x, y);
         x -= 1.0f;
         sprite->SetPosition(x, y);
     }
+    else
+        ReturnToIdle();
 
     if (App::GetController().GetLeftThumbStickY() > 0.5f) {
         sprite->SetAnimation(static_cast<int>(PlayerAnimation::IDLE));

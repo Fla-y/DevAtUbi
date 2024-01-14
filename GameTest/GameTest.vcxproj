@@ -190,6 +190,7 @@
     <ClInclude Include="filePath.h" />
     <ClInclude Include="FileReader.h" />
     <ClInclude Include="LevelBuilder.h" />
+    <ClInclude Include="LogUtility.h" />
     <ClInclude Include="Physics.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="stb_image\stb_image.h" />
@@ -207,6 +208,7 @@
     <ClCompile Include="FileReader.cpp" />
     <ClCompile Include="GameTest.cpp" />
     <ClCompile Include="LevelBuilder.cpp" />
+    <ClCompile Include="LogUtility.cpp" />
     <ClCompile Include="Physics.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="stb_image\stb_image.cpp" />
