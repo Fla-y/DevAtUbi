@@ -14,14 +14,18 @@
 #include "BackgroundBuilder.h"
 #include "AnimationManager.h"
 #include "LogUtility.h"
+#include "CollisionManager.h"
+#include "Object.h"
 
 //------------------------------------------------------------------------
 std::unique_ptr<Player> playerPtr;
 std::vector<std::vector<int>> levelData;
 std::unique_ptr<BackgroundBuilder> myBackgroundBuilder;
+std::unique_ptr<Object> hammerPtr;
 
 LogUtility logger("game_log.txt", "critical_log.txt");
 AnimationManager animManager;
+CollisionManager collManager();
 
 
 //------------------------------------------------------------------------
@@ -30,8 +34,10 @@ AnimationManager animManager;
 void Init()
 {
 	animManager.InitializePlayer();
-	myBackgroundBuilder = std::make_unique<BackgroundBuilder>();
+	animManager.InitializeHammer();
+	myBackgroundBuilder = std::make_unique <BackgroundBuilder>();
 	playerPtr = std::make_unique <Player>(logger, animManager);
+	hammerPtr = std::make_unique <Object>(logger, animManager); 
 }
 
 //------------------------------------------------------------------------
@@ -41,6 +47,7 @@ void Init()
 void Update(float deltaTime)
 {
 	playerPtr->Move(deltaTime);
+	//hammerPtr->Animate();
 	//------------------------------------------------------------------------
 	// Sample Sound.
 	//------------------------------------------------------------------------
@@ -60,6 +67,7 @@ void Render()
 		myBackgroundBuilder->Draw();
 	}
 	playerPtr->sprite->Draw();
+	//hammerPtr->Animate();
 	//------------------------------------------------------------------------
 
 	//------------------------------------------------------------------------
@@ -67,7 +75,6 @@ void Render()
 	//------------------------------------------------------------------------
 	//App::Print(100, 100, "Sample Text");
 
-	
 }
 //------------------------------------------------------------------------
 // Add your shutdown code here. Called when the APP_QUIT_KEY is pressed.

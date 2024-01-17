@@ -5,7 +5,7 @@
 #include "app/app.h"
 #include "filePath.h"
 
-enum class PlayerAnimation
+enum class AnimationSet
 {
 	WALK,
 	WALK_BACK,
@@ -15,8 +15,14 @@ enum class PlayerAnimation
 	MELEE,
 	ATTACK,
 	POWER_UP,
+	HAMMER,
 };
 
+enum class SpriteType
+{
+	PLAYER,
+	HAMMER,
+};
 
 class AnimationManager
 {
@@ -25,20 +31,21 @@ public:
 	AnimationManager();
 	~AnimationManager();
 
-	CSimpleSprite* GetSprite();
+	CSimpleSprite* GetSprite(SpriteType type);
 	void InitializePlayer();
+	void InitializeHammer();
 
 private:
 
-	struct AnimationData {
-		std::filesystem::path filePath;
-		int columns = 0;
-		float speed = 0;
-		std::vector<int> frameSequence;
-	};
+	//struct AnimationData {
+	//	std::filesystem::path filePath;
+	//	int columns = 0;
+	//	float speed = 0;
+	//	std::vector<int> frameSequence;
+	//};
 	CSimpleSprite* player;
 	//std::map<PlayerAnimation, AnimationData> playerAnimation;
-	
+	CSimpleSprite* sprite;
 };
 
 #endif

@@ -28,6 +28,8 @@
     <ClCompile Include="BackgroundBuilder.cpp" />
     <ClCompile Include="AnimationManager.cpp" />
     <ClCompile Include="LogUtility.cpp" />
+    <ClCompile Include="CollisionManager.cpp" />
+    <ClCompile Include="Object.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -63,6 +65,8 @@
     <ClInclude Include="AnimationManager.h" />
     <ClInclude Include="filePath.h" />
     <ClInclude Include="LogUtility.h" />
+    <ClInclude Include="CollisionManager.h" />
+    <ClInclude Include="Object.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="NextAPI">
