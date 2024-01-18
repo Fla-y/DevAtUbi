@@ -3,27 +3,29 @@
 
 CollisionManager::CollisionManager(CSimpleSprite* sprite) : mySprite(sprite)
 {
-    if (sprite != nullptr) {
-        UpdateBoundingBox();
-    }
 }
 
-void CollisionManager::UpdateBoundingBox()
+void CollisionManager::UpdateBoundingBox(std::map<int,DimData>& frameDim, bool isPlayer )
 {
     if (mySprite == nullptr) return;
 
+    if (isPlayer) {  //Player sprite has the same dimensions for all the frames
+        width = frameDim.at(0).width;
+        height = frameDim.at(0).height;
+    }
+    else {
+        width = frameDim.at(mySprite->GetFrame()).width;
+        height = frameDim.at(mySprite->GetFrame()).height;
+    }
+
     float x, y;
     mySprite->GetPosition(x, y);
-                   
-    float width = mySprite->GetWidth();
-    float height = mySprite->GetHeight();
     float scale = mySprite->GetScale();
-
-    // Assuming the position (x, y) is the center of the sprite
+    //considering x,y as the center of the sprite
     spriteBoundingBox.left = x - (width * scale) / 2.0f;
     spriteBoundingBox.right = x + (width * scale) / 2.0f;
-    spriteBoundingBox.top = y + (height * scale) / 2.0f;
-    spriteBoundingBox.bottom = y - (height * scale) / 2.0f;
+    spriteBoundingBox.top = y + (height * scale)/2.0f;
+    spriteBoundingBox.bottom = (y - (height * scale) / 2.0f) + 10.0f; //adjustment
 }
 
 

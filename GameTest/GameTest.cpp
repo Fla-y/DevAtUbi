@@ -11,7 +11,7 @@
 #include "Physics.h"
 #include "LevelBuilder.h"
 #include "FileReader.h"
-#include "BackgroundBuilder.h"
+#include "Map.h"
 #include "AnimationManager.h"
 #include "LogUtility.h"
 #include "CollisionManager.h"
@@ -20,13 +20,13 @@
 //------------------------------------------------------------------------
 std::unique_ptr<Player> playerPtr;
 std::vector<std::vector<int>> levelData;
-std::unique_ptr<BackgroundBuilder> myBackgroundBuilder;
+std::unique_ptr<Map> myMap;
 std::unique_ptr<Object> hammerPtr;
 
+bool isInitSuccessful = true;
 LogUtility logger("game_log.txt", "critical_log.txt");
 AnimationManager animManager;
-CollisionManager collManager();
-
+CSimpleSprite* sprite;
 
 //------------------------------------------------------------------------
 // Called before first update. Do any initial setup here.
@@ -35,9 +35,9 @@ void Init()
 {
 	animManager.InitializePlayer();
 	animManager.InitializeHammer();
-	myBackgroundBuilder = std::make_unique <BackgroundBuilder>();
-	playerPtr = std::make_unique <Player>(logger, animManager);
-	hammerPtr = std::make_unique <Object>(logger, animManager); 
+	myMap = std::make_unique <Map>(logger, isInitSuccessful);
+	playerPtr = std::make_unique <Player>(logger, animManager,isInitSuccessful);
+	hammerPtr = std::make_unique <Object>(logger, animManager,isInitSuccessful); 
 }
 
 //------------------------------------------------------------------------
@@ -46,15 +46,23 @@ void Init()
 //------------------------------------------------------------------------
 void Update(float deltaTime)
 {
-	playerPtr->Move(deltaTime);
-	//hammerPtr->Animate();
-	//------------------------------------------------------------------------
-	// Sample Sound.
-	//------------------------------------------------------------------------
-	if (App::GetController().CheckButton(XINPUT_GAMEPAD_B, true))
-	{
-		App::PlaySound(".\\TestData\\Test.wav");
+	if (!isInitSuccessful) {
+		return;  // Skip updating game logic
 	}
+	playerPtr->Move(deltaTime);
+	hammerPtr->Animate(deltaTime);
+	myMap->Update(deltaTime);
+
+	if (playerPtr->CheckCollision(hammerPtr->GetCollisionManager())) {
+		playerPtr->TriggerDeath();
+	}
+	////------------------------------------------------------------------------
+	//// Sample Sound.
+	////------------------------------------------------------------------------
+	//if (App::GetController().CheckButton(XINPUT_GAMEPAD_B, true))
+	//{
+	//	App::PlaySound(".\\TestData\\Test.wav");
+	//}
 }
 
 //------------------------------------------------------------------------
@@ -63,17 +71,14 @@ void Update(float deltaTime)
 //------------------------------------------------------------------------
 void Render()
 {
-	if (myBackgroundBuilder) {
-		myBackgroundBuilder->Draw();
+	if (!isInitSuccessful) {
+		App::Print(400, 400, "Initialization Failed! Please restart the game.");
+		return;  // Skip rendering game logic
 	}
-	playerPtr->sprite->Draw();
-	//hammerPtr->Animate();
-	//------------------------------------------------------------------------
-
-	//------------------------------------------------------------------------
-	// Example Text.
-	//------------------------------------------------------------------------
-	//App::Print(100, 100, "Sample Text");
+	myMap->DrawBackground();
+	myMap->DrawFloor();
+	playerPtr->Draw();
+	hammerPtr->Draw();
 
 }
 //------------------------------------------------------------------------
@@ -82,4 +87,6 @@ void Render()
 //------------------------------------------------------------------------
 void Shutdown()
 {
+	delete sprite;
 }
+

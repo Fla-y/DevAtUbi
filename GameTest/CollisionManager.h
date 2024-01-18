@@ -5,6 +5,12 @@
 #include "app/app.h"
 #include "LogUtility.h"
 
+
+struct DimData {
+    float height;
+    float width;
+};
+
 struct BoundingBox {
     float left;
     float right;
@@ -16,7 +22,7 @@ class CollisionManager
 {
 public:
     CollisionManager(CSimpleSprite* sprite);
-    void UpdateBoundingBox();
+    void UpdateBoundingBox(std::map<int,DimData>& frameDim, bool isPlayer);
 
     bool CheckCollision(const CollisionManager& other) const;
 
@@ -25,6 +31,7 @@ public:
 private:
     CSimpleSprite* mySprite;
     BoundingBox spriteBoundingBox;
+    float height, width;
 
     //BoundingBox GetBoundingBox(CSimpleSprite* sprite);
 };

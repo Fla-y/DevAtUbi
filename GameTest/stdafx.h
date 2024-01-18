@@ -20,4 +20,6 @@
 #include <filesystem>
 #include <iostream>
 #include <fstream>
-#define NOMINMAX   
+
+#define NOMINMAX 
+

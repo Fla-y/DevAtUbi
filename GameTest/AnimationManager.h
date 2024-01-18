@@ -12,7 +12,7 @@ enum class AnimationSet
 	IDLE,
 	HURT,
 	DEATH,
-	MELEE,
+	JUMP,
 	ATTACK,
 	POWER_UP,
 	HAMMER,

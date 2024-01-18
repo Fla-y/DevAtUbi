@@ -186,7 +186,7 @@
     <ClInclude Include="App\SimpleController.h" />
     <ClInclude Include="App\SimpleSound.h" />
     <ClInclude Include="App\SimpleSprite.h" />
-    <ClInclude Include="BackgroundBuilder.h" />
+    <ClInclude Include="Map.h" />
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="filePath.h" />
     <ClInclude Include="FileReader.h" />
@@ -206,7 +206,7 @@
     <ClCompile Include="App\SimpleController.cpp" />
     <ClCompile Include="App\SimpleSound.cpp" />
     <ClCompile Include="App\SimpleSprite.cpp" />
-    <ClCompile Include="BackgroundBuilder.cpp" />
+    <ClCompile Include="Map.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="FileReader.cpp" />
     <ClCompile Include="GameTest.cpp" />

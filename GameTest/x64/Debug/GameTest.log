@@ -1,4 +1,8 @@
-﻿  GameTest.cpp
+﻿  AnimationManager.cpp
+  GameTest.cpp
+  Object.cpp
+  Player.cpp
+  Generazione del codice in corso...
   GameTest.vcxproj -> C:\Users\Fla\Codice\[DevAtUbi]\x64\Debug\GameTest.exe
   C:\Users\Fla\Codice\[DevAtUbi]\\GameTest\glut\bin\x64\freeglut.dll
   1 File copiati
