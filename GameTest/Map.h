@@ -25,7 +25,6 @@ private:
     std::unique_ptr<CSimpleSprite> backgroundSprite;
     void InitializeBackground();
     void InitializeFloor();
-    //std::vector<std::unique_ptr<CSimpleSprite>> floorTiles;
     std::vector<CSimpleSprite*> floorTiles;
     int initTileCount,tileSize;
     LogUtility& logger;

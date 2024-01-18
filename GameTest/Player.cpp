@@ -3,7 +3,7 @@
 #include "app/app.h"
 
 Player::Player(LogUtility& logger, AnimationManager& animManager, bool& isInitSuccessful) : logger(logger), animManager(animManager),
-isJumping(false), x(400.0f), y(400.0f), velocityY(0.0f),
+isJumping(false), x(400.0f), y(400.0f), velocityY(0.0f),maxHeight(100.0f),
 jumpVelocity(0.8f), sprite(animManager.GetSprite(SpriteType::PLAYER)),
 collisionManager(sprite), isAlive(true),onGround(true)
 {
@@ -87,40 +87,6 @@ void Player::TriggerDeath()
     sprite->SetAnimation(static_cast<int>(AnimationSet::DEATH));
     isAlive = false;
 }
-
-//void Player::Jump(float deltaTime) {
-//    if (isOnGround) {
-//        velocityY = sqrt(2 * gravity * maxJumpHeight);
-//        isOnGround = false;
-//    }
-//}
-
-//
-//void Player::Jump(float deltaTime) {
-//    velocityY += jumpVelocity;
-//    isJumping = true;
-//    y += velocityY * deltaTime;
-//    isJumping = false;
-//    //if (!isJumping) {
-//    //    velocityY = jumpVelocity;  // Initial jump velocity (negative for upward movement)
-//    //    y += velocityY * deltaTime;
-//    //    isJumping = true;
-//    //}
-//
-//    //Physics::Gravity(deltaTime, velocityY); // Apply gravity
-//    //velocityY -= 9.8 * deltaTime;
-//    //y -= velocityY * deltaTime; // Update the Y position, subtract because origin is at the bottom
-//    //isJumping = false;
-//    // Check if the player has landed
-//    if (y <= 50.0f) {
-//        y = 50.0f; // Set the player on the ground
-//        velocityY = 0.0f; // Reset the vertical velocity
-//        isJumping = false; // Player is no longer jumping
-//    }
-//    
-//}
-//
-
 
 void Player::Jump(float deltaTime) {
     velocityY += jumpVelocity;

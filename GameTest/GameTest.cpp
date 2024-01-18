@@ -2,13 +2,11 @@
 // GameTest.cpp
 //------------------------------------------------------------------------
 #include "stdafx.h"
-//------------------------------------------------------------------------
 #include <windows.h> 
-#include <math.h>  
-//------------------------------------------------------------------------
+#include <math.h> 
+#include <crtdbg.h>
 #include "app\app.h"
 #include "Player.h"
-#include "Physics.h"
 #include "LevelBuilder.h"
 #include "FileReader.h"
 #include "Map.h"
@@ -19,23 +17,24 @@
 
 //------------------------------------------------------------------------
 std::unique_ptr<Player> playerPtr;
-std::vector<std::vector<int>> levelData;
-std::unique_ptr<Map> myMap;
+std::unique_ptr<Map> levelMap;
 std::unique_ptr<Object> hammerPtr;
 
 bool isInitSuccessful = true;
 LogUtility logger("game_log.txt", "critical_log.txt");
 AnimationManager animManager;
-CSimpleSprite* sprite;
+
 
 //------------------------------------------------------------------------
 // Called before first update. Do any initial setup here.
 //------------------------------------------------------------------------
 void Init()
 {
+	//_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+
 	animManager.InitializePlayer();
 	animManager.InitializeHammer();
-	myMap = std::make_unique <Map>(logger, isInitSuccessful);
+	levelMap = std::make_unique <Map>(logger, isInitSuccessful);
 	playerPtr = std::make_unique <Player>(logger, animManager,isInitSuccessful);
 	hammerPtr = std::make_unique <Object>(logger, animManager,isInitSuccessful); 
 }
@@ -47,11 +46,11 @@ void Init()
 void Update(float deltaTime)
 {
 	if (!isInitSuccessful) {
-		return;  // Skip updating game logic
+		return; 
 	}
 	playerPtr->Move(deltaTime);
 	hammerPtr->Animate(deltaTime);
-	myMap->Update(deltaTime);
+	levelMap->Update(deltaTime);
 
 	if (playerPtr->CheckCollision(hammerPtr->GetCollisionManager())) {
 		playerPtr->TriggerDeath();
@@ -73,11 +72,11 @@ void Render()
 {
 	if (!isInitSuccessful) {
 		App::Print(400, 400, "Initialization Failed! Please restart the game.");
-		return;  // Skip rendering game logic
+		return; 
 	}
-	myMap->DrawBackground();
-	myMap->DrawFloor();
+	levelMap->DrawBackground();
 	playerPtr->Draw();
+	levelMap->DrawFloor();
 	hammerPtr->Draw();
 
 }
@@ -87,6 +86,5 @@ void Render()
 //------------------------------------------------------------------------
 void Shutdown()
 {
-	delete sprite;
 }
 

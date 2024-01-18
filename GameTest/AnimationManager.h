@@ -37,14 +37,7 @@ public:
 
 private:
 
-	//struct AnimationData {
-	//	std::filesystem::path filePath;
-	//	int columns = 0;
-	//	float speed = 0;
-	//	std::vector<int> frameSequence;
-	//};
 	CSimpleSprite* player;
-	//std::map<PlayerAnimation, AnimationData> playerAnimation;
 	CSimpleSprite* sprite;
 };
 

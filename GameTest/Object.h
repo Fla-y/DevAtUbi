@@ -14,7 +14,7 @@ class Object
 public:
 
 	Object(LogUtility& logger, AnimationManager& animManager, bool& isInitSuccessful);
-	//~Object();
+	~Object();
 	void Animate(float deltaTime);
 	void Draw();
 	const CollisionManager& GetCollisionManager() const;

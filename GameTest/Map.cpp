@@ -10,6 +10,12 @@ Map::Map(LogUtility& logger, bool& isInitSuccessful):initTileCount(32),tileSize(
 }
 
 Map::~Map() {
+    for (auto tile : floorTiles) {
+        if (tile != nullptr) {
+            delete tile;
+        }
+    }
+    floorTiles.clear();
 }
 
 void Map::DrawBackground() {

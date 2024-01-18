@@ -1,35 +1,12 @@
 #include "stdafx.h"
 #include "AnimationManager.h"
 
-/*AnimationSet[AnimationSet::WALK] = {
-        PLAYER, 6, 1.0f / 15.0f, {0, 1, 2, 3, 4, 5}
-    };
-    AnimationSet[AnimationSet::WALK_BACK] = {
-        PLAYER, 6, 1.0f / 15.0f, {6,7,8,9,10,11}
-    };
-    AnimationSet[AnimationSet::IDLE] = {
-        PLAYER, 4, 1.0f / 25.0f, {50,51,52,53}
-    };
-    AnimationSet[AnimationSet::HURT] = {
-        PLAYER, 2, 1.0f / 10.0f, {48,49}
-    };
-    AnimationSet[AnimationSet::DEATH] = {
-        PLAYER, 6, 1.0f / 10.0f, {42,43,44,45,46,47}
-    };
-    AnimationSet[AnimationSet::JUMP] = {
-        PLAYER, 6, 1.0f / 10.0f, {30,31,32,33,34,35}
-    };
-    AnimationSet[AnimationSet::ATTACK] = {
-        PLAYER, 6, 1.0f / 10.0f, {24,25,26,27,28,29}
-    };
-    AnimationSet[AnimationSet::POWER_UP] = {
-        PLAYER, 6, 1.0f / 10.0f, {12,13,14,15,16,17}
-    };*/
-
 AnimationManager::AnimationManager() {
 }
 
 AnimationManager::~AnimationManager() {
+    delete player;
+    delete sprite;
 }
 
 void AnimationManager::InitializePlayer() {

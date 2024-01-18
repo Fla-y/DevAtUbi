@@ -40,20 +40,3 @@ bool CollisionManager::CheckCollision(const CollisionManager& other) const {
 const BoundingBox& CollisionManager::GetBoundingBox() const {
     return spriteBoundingBox;
 }
-
-
-
-//
-//BoundingBox CollisionManager::GetBoundingBox(CSimpleSprite* sprite) {
-//    float x, y;
-//    sprite->GetPosition(x, y);
-//
-//    float width = sprite->GetWidth();
-//    float height = sprite->GetHeight();
-//    float scale = sprite->GetScale();
-//
-//    spriteBoundingBox.left = x - (width * scale) / 2.0f;
-//    spriteBoundingBox.right = x + (width * scale) / 2.0f;
-//    spriteBoundingBox.top = y - (height * scale) / 2.0f;
-//    spriteBoundingBox.bottom = y + (height * scale) / 2.0f;
-//}
