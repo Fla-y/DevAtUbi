@@ -32,8 +32,6 @@ private:
     CSimpleSprite* mySprite;
     BoundingBox spriteBoundingBox;
     float height, width;
-
-    //BoundingBox GetBoundingBox(CSimpleSprite* sprite);
 };
 
 #endif 

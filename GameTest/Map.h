@@ -22,7 +22,7 @@ public:
     std::pair<float, float> ConvertPixelToVirtual(int px, int py);
     //--------------------------------------------------
 private:
-    std::unique_ptr<CSimpleSprite> backgroundSprite;
+    CSimpleSprite* backgroundSprite;
     void InitializeBackground();
     void InitializeFloor();
     std::vector<CSimpleSprite*> floorTiles;

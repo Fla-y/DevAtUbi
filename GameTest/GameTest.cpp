@@ -7,8 +7,6 @@
 #include <crtdbg.h>
 #include "app\app.h"
 #include "Player.h"
-#include "LevelBuilder.h"
-#include "FileReader.h"
 #include "Map.h"
 #include "AnimationManager.h"
 #include "LogUtility.h"

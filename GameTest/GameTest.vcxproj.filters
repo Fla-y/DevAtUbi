@@ -29,6 +29,7 @@
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Map.cpp" />
+    <ClCompile Include="ObjectPool.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -65,6 +66,7 @@
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Map.h" />
+    <ClInclude Include="ObjectPool.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="NextAPI">
@@ -78,7 +80,5 @@
     <Text Include="ReadMe.txt">
       <Filter>NextAPI</Filter>
     </Text>
-    <Text Include="level1.txt" />
-    <Text Include="level2.txt" />
   </ItemGroup>
 </Project>

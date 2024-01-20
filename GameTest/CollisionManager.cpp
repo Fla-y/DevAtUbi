@@ -21,13 +21,13 @@ void CollisionManager::UpdateBoundingBox(std::map<int,DimData>& frameDim, bool i
     float x, y;
     mySprite->GetPosition(x, y);
     float scale = mySprite->GetScale();
+
     //considering x,y as the center of the sprite
     spriteBoundingBox.left = x - (width * scale) / 2.0f;
     spriteBoundingBox.right = x + (width * scale) / 2.0f;
     spriteBoundingBox.top = y + (height * scale)/2.0f;
-    spriteBoundingBox.bottom = (y - (height * scale) / 2.0f) + 10.0f; //adjustment
+    spriteBoundingBox.bottom = (y - (height * scale) / 2.0f) + 10.0f;
 }
-
 
 // Method to check for collision with another sprite
 bool CollisionManager::CheckCollision(const CollisionManager& other) const {
@@ -36,7 +36,6 @@ bool CollisionManager::CheckCollision(const CollisionManager& other) const {
         spriteBoundingBox.top < otherBox.bottom || spriteBoundingBox.bottom > otherBox.top);
 }
 
-// Accessor for the bounding box
 const BoundingBox& CollisionManager::GetBoundingBox() const {
     return spriteBoundingBox;
 }

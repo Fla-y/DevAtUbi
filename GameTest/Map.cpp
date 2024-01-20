@@ -74,20 +74,14 @@ void Map::Update(float deltaTime) {
     }
 }
 
-//
-std::pair<float, float> Map::ConvertPixelToVirtual(int px, int py)
-{
-    float vx = (px / static_cast<float>(WINDOW_WIDTH)) * APP_VIRTUAL_WIDTH;
-    float vy = (py / static_cast<float>(WINDOW_HEIGHT)) * APP_VIRTUAL_HEIGHT;
-    return std::make_pair(vx, vy);
-}
-
 void Map::InitializeBackground()
 {
-    backgroundSprite = std::make_unique<CSimpleSprite>(BACKGROUND.string().c_str(), 1, 1);
+    backgroundSprite = App::CreateSprite(BACKGROUND.string().c_str(), 1, 1);
+
     // In virtual coordinates, this places it at the middle of the screen
     backgroundSprite->SetPosition(APP_VIRTUAL_WIDTH * 0.5f, APP_VIRTUAL_HEIGHT * 0.5f);
-    // Since the virtual resolution matches the sprite's size, we use a scale of 1.0f
+
+    // virtual resolution matches the sprite's size, so scale= 1.0
     backgroundSprite->SetScale(1.0f);
     if (backgroundSprite == nullptr) {
         std::cerr << "Error: Failed to initialize background" << std::endl;
@@ -100,7 +94,7 @@ void Map::InitializeFloor() {
     for (int i = 0; i < initTileCount; ++i) {
         CSimpleSprite* tile = App::CreateSprite(FLOOR_TILE.string().c_str(), 1, 1);
         tile->SetScale(1.0f);
-        tile->SetPosition(100.0f + i * tileSize, 100.0f);
+        tile->SetPosition(0.0f + i * tileSize, 15.0f);
         floorTiles.push_back(tile);
         if (tile == nullptr) {
             std::cerr << "Error: Failed to initialize floor tile" << std::endl;

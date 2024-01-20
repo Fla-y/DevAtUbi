@@ -2,9 +2,8 @@
 #include "FileReader.h"
 
 
-
-FileReader::FileReader(const std::string& filename) : filename(filename) {}
-
+FileReader::FileReader(const std::string& filename) : filename(filename) {
+}
 
 std::vector<char> FileReader::fileReaderMethod() {
     std::vector<char> fileContents;

@@ -21,11 +21,16 @@ public:
 	void InitializeFrameDim();
 	std::map<int, DimData> frameDimensions;
 
+	bool IsActive() const;
+	void Activate();
+	void Deactivate();
+
 private:
 	LogUtility& logger;
 	AnimationManager& animManager;
 	CSimpleSprite* hammer;
 	CollisionManager hammerCollision;
+	bool isActive;
 	
 }; 
 

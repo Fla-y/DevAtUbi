@@ -21,10 +21,10 @@ const fs::path HAMMER_SIZE_7 = ".\\TestData\\framesPerCollision\\hammerFrames\\H
 
 
 //background sprite
-const fs::path BACKGROUND = ".\\TestData\\background.png";
+const fs::path BACKGROUND = ".\\TestData\\LabBackground.png";
 
 //floor tiles
-const fs::path FLOOR_TILE = ".\\TestData\\tiles\\IndustrialTile_78.png";
+const fs::path FLOOR_TILE = ".\\TestData\\tiles\\IndustrialTile_73.png";
 
 #endif
 

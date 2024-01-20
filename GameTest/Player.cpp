@@ -48,20 +48,6 @@ void Player::Move(float deltaTime) {
     else
         ReturnToIdle();
 
-   /* if (App::GetController().GetLeftThumbStickY() > 0.5f) {
-        sprite->SetAnimation(static_cast<int>(AnimationSet::IDLE));
-        sprite->GetPosition(x, y);
-        y += 1.0f;
-        sprite->SetPosition(x, y);
-    }
-
-    if (App::GetController().GetLeftThumbStickY() < -0.5f) {
-        sprite->SetAnimation(static_cast<int>(AnimationSet::ATTACK));
-        sprite->GetPosition(x, y);
-        y -= 1.0f;
-        sprite->SetPosition(x, y);
-    }*/
-
     if (App::GetController().GetLeftThumbStickY() > 0.5f && onGround) {
         sprite->SetAnimation(static_cast<int>(AnimationSet::JUMP));
         sprite->GetPosition(x, y);
@@ -71,7 +57,6 @@ void Player::Move(float deltaTime) {
     }
 
     collisionManager.UpdateBoundingBox(frameDimensions,true);
-
 }
 
 void Player::Draw() {
@@ -95,5 +80,4 @@ void Player::Jump(float deltaTime) {
     velocityY = -1;
     y -= velocityY * deltaTime;
     onGround = true;
-    
 }

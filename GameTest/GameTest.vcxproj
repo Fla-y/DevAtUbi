@@ -174,8 +174,6 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <Text Include="level1.txt" />
-    <Text Include="level2.txt" />
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
@@ -193,6 +191,7 @@
     <ClInclude Include="LevelBuilder.h" />
     <ClInclude Include="LogUtility.h" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="ObjectPool.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="stb_image\stb_image.h" />
     <ClInclude Include="stdafx.h" />
@@ -212,6 +211,7 @@
     <ClCompile Include="LevelBuilder.cpp" />
     <ClCompile Include="LogUtility.cpp" />
     <ClCompile Include="Object.cpp" />
+    <ClCompile Include="ObjectPool.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="stb_image\stb_image.cpp" />
     <ClCompile Include="stdafx.cpp">

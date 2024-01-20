@@ -3,7 +3,7 @@
 #include "Object.h"
 
 Object::Object(LogUtility& logger, AnimationManager& animManager,bool& isInitSuccessful): logger(logger), animManager(animManager), 
-hammer(animManager.GetSprite(SpriteType::HAMMER)), hammerCollision( CollisionManager(hammer))
+hammer(animManager.GetSprite(SpriteType::HAMMER)), hammerCollision( CollisionManager(hammer)), isActive(false)
 {
     if (hammer == nullptr) {
         std::cerr << "Error: Failed to initialize hammer." << std::endl;
@@ -35,7 +35,7 @@ const CollisionManager& Object::GetCollisionManager() const
     return hammerCollision;
 }
 
-//different frames have different dimensions, so different hitbox
+//different frames have different dimensions
 void Object::InitializeFrameDim()
 {
     CSimpleSprite* temp = App::CreateSprite(HAMMER_SIZE_0.string().c_str(), 1, 1);
@@ -63,4 +63,20 @@ void Object::InitializeFrameDim()
     temp = App::CreateSprite(HAMMER_SIZE_7.string().c_str(), 1, 1);
     frameDimensions[7] = { temp->GetHeight(),temp->GetWidth() };
     delete temp;
+}
+
+
+bool Object::IsActive() const
+{
+    return isActive;
+}
+
+void Object::Activate()
+{
+    isActive = true;
+}
+
+void Object::Deactivate()
+{
+    isActive = false;
 }
