@@ -4,6 +4,9 @@
 #include "stdafx.h"
 #include "app/app.h"
 #include "filePath.h"
+#include <cmath>
+
+//const float cmath::PI = 3.14159265358979323846f;
 
 enum class AnimationSet
 {
@@ -15,6 +18,7 @@ enum class AnimationSet
 	JUMP,
 	ATTACK,
 	POWER_UP,
+	WALK_FASTER,
 	HAMMER,
 };
 

@@ -1,8 +1,4 @@
-﻿  Map.cpp
-  GameTest.cpp
-  Object.cpp
-  ObjectPool.cpp
-  Generazione del codice in corso...
+﻿  Player.cpp
   GameTest.vcxproj -> C:\Users\Fla\Codice\[DevAtUbi]\x64\Debug\GameTest.exe
   C:\Users\Fla\Codice\[DevAtUbi]\\GameTest\glut\bin\x64\freeglut.dll
   1 File copiati

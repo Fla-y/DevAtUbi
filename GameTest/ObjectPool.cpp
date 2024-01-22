@@ -19,10 +19,25 @@ ObjectPool::~ObjectPool()
 Object* ObjectPool::GetAvailableHammer()
 {
 	for (auto* hammer : hammers) {
-		if (!hammer->IsActive()) {
+		/*if (!hammer->IsActive()) {
 			hammer->Activate();
 			return hammer;
-		}
+		}*/
 	}
 	return nullptr; 
 }
+
+//
+//bool ObjectPool::IsActive() const {
+//	return isActive;
+//}
+//
+//void ObjectPool::Activate() {
+//	isActive = true;
+//	 Additional code to initialize the object for use
+//}
+//
+//void ObjectPool::Deactivate() {
+//	isActive = false;
+//	 Additional code to reset the object for future use
+//}

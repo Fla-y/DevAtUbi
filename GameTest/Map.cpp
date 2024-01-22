@@ -5,7 +5,7 @@
 
 
 Map::Map(LogUtility& logger, bool& isInitSuccessful):initTileCount(32),tileSize(32),logger(logger) {
-    InitializeBackground();
+    InitializeBackground(isInitSuccessful);
     InitializeFloor();
 }
 
@@ -16,13 +16,21 @@ Map::~Map() {
         }
     }
     floorTiles.clear();
+
+    for (auto bgSprite : backgroundSprites) {
+        if (bgSprite != nullptr) {
+            delete bgSprite;
+        }
+    }
+    backgroundSprites.clear();
 }
 
 void Map::DrawBackground() {
-    if (backgroundSprite) {
-        backgroundSprite->Draw();
+    for (auto& bgSprite : backgroundSprites) {
+        if (bgSprite) {
+            bgSprite->Draw();
+        }
     }
-
 }
 
 void Map::DrawFloor()
@@ -30,7 +38,7 @@ void Map::DrawFloor()
     for (auto& tile : floorTiles) {
         if (tile == nullptr) {
             std::cerr << "Error: Failed to initialize floor." << std::endl;
-            logger.LogCriticalError("floor initialization failed.");
+            logger.LogError("floor initialization failed.");
         }
         else {
             tile->Draw();
@@ -39,10 +47,10 @@ void Map::DrawFloor()
 }
 
 void Map::Update(float deltaTime) {
-    const float tileWidth = 32.0f;    // Width of each tile
+    const float tileWidth = 32.0f;
 
     // Move each tile
-    for (auto it = floorTiles.begin(); it != floorTiles.end(); /* no increment */) {
+    for (auto it = floorTiles.begin(); it != floorTiles.end();) {
         CSimpleSprite* tile = *it;
         float x, y;
         tile->GetPosition(x, y);
@@ -72,22 +80,30 @@ void Map::Update(float deltaTime) {
             floorTiles.push_back(newTile);
         }
     }
+
+    UpdateBackground(deltaTime);
 }
 
-void Map::InitializeBackground()
+void Map::InitializeBackground(bool& isInitSuccessful)
 {
-    backgroundSprite = App::CreateSprite(BACKGROUND.string().c_str(), 1, 1);
+    const int numBackgroundSprites = 10; // Including buffer sprite
+    for (int i = 0; i < numBackgroundSprites; ++i) {
+        CSimpleSprite* bgSprite = App::CreateSprite(BACKGROUND.string().c_str(), 1, 1);
+        bgSprite->SetScale(1.0f);
 
-    // In virtual coordinates, this places it at the middle of the screen
-    backgroundSprite->SetPosition(APP_VIRTUAL_WIDTH * 0.5f, APP_VIRTUAL_HEIGHT * 0.5f);
+        float spriteWidth = bgSprite->GetWidth();
+        bgSprite->SetPosition(i * spriteWidth, APP_VIRTUAL_HEIGHT * 0.5f);
+        backgroundSprites.push_back(bgSprite);
 
-    // virtual resolution matches the sprite's size, so scale= 1.0
-    backgroundSprite->SetScale(1.0f);
-    if (backgroundSprite == nullptr) {
-        std::cerr << "Error: Failed to initialize background" << std::endl;
-        logger.LogError("Background initialization failed.");
-        bool isInitSuccesful = false;
+        if (bgSprite == nullptr) {
+            std::cerr << "Error: Failed to initialize background" << std::endl;
+            logger.LogError("Background initialization failed.");
+            isInitSuccessful = false;
+        }
     }
+    backgroundSpriteWidth = backgroundSprites.front()->GetWidth();
+
+
 }
 
 void Map::InitializeFloor() {
@@ -100,6 +116,23 @@ void Map::InitializeFloor() {
             std::cerr << "Error: Failed to initialize floor tile" << std::endl;
             logger.LogError("floor tile initialization failed.");
             bool isInitSuccesful = false;
+        }
+    }
+}
+
+void Map::UpdateBackground(float deltaTime)
+{
+    for (auto& bgSprite : backgroundSprites) {
+        float x, y;
+        bgSprite->GetPosition(x, y);
+        float newX = x - (SCROLL_SPEED * deltaTime);
+        bgSprite->SetPosition(newX, y);
+
+        // Reset and reuse the sprite that goes off-screen
+        if (newX + backgroundSpriteWidth < 0) {
+            float lastSpriteX, lastSpriteY;
+            backgroundSprites.back()->GetPosition(lastSpriteX, lastSpriteY);
+            bgSprite->SetPosition(lastSpriteX + backgroundSpriteWidth, lastSpriteY);
         }
     }
 }

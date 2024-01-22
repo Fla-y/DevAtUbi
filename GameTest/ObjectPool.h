@@ -13,6 +13,10 @@ public:
 	~ObjectPool();
 	Object* GetAvailableHammer();
 
+	/*bool IsActive() const;
+	void Activate();
+	void Deactivate();*/
+
 private:
 	std::vector<Object*> hammers;
 	LogUtility& logger;

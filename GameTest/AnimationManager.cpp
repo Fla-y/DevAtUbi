@@ -20,8 +20,9 @@ void AnimationManager::InitializePlayer() {
     player->CreateAnimation(static_cast<int>(AnimationSet::JUMP), 1.0f / 15.0f, { 30,31,32,33,34,35 });
     player->CreateAnimation(static_cast<int>(AnimationSet::ATTACK), 1.0f / 15.0f, { 24,25,26,27,28,29 });
     player->CreateAnimation(static_cast<int>(AnimationSet::POWER_UP), 1.0f / 15.0f, { 12,13,14,15,16,17 });
+    player->CreateAnimation(static_cast<int>(AnimationSet::WALK_FASTER), 1.0f / 18.0f, { 0, 1, 2, 3, 4, 5 });
     player->SetScale(2.5f);
-    player->SetPosition(150.0f, 180.0f);
+    player->SetPosition(150.0f, 150.0f);
 
 }
 
@@ -29,7 +30,8 @@ void AnimationManager::InitializeHammer()
 {
     sprite = App::CreateSprite(HAMMER.string().c_str(), 8, 1);
     sprite->CreateAnimation(static_cast<int>(AnimationSet::HAMMER), 1.0f / 5.0f, { 0,1,2,3,4,5,6,7 });
-    sprite->SetScale(6.0f);
+    sprite->SetScale(4.0f);
+    sprite->SetAngle(3.14159f);
 
 }
 

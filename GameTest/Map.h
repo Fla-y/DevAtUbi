@@ -19,15 +19,20 @@ public:
 
 
     //I need to find a better place for it
-    std::pair<float, float> ConvertPixelToVirtual(int px, int py);
+    //std::pair<float, float> ConvertPixelToVirtual(int px, int py);
     //--------------------------------------------------
 private:
+    float backgroundSpriteWidth;
     CSimpleSprite* backgroundSprite;
-    void InitializeBackground();
-    void InitializeFloor();
     std::vector<CSimpleSprite*> floorTiles;
+    std::vector<CSimpleSprite*> backgroundSprites;
     int initTileCount,tileSize;
     LogUtility& logger;
+
+    void UpdateBackground(float deltaTime);
+    void InitializeBackground(bool& isInitSuccessful);
+    void InitializeFloor();
+
 };
 
 #endif

@@ -20,7 +20,7 @@ Object::~Object()
 
 void Object::Animate(float deltaTime)
 {
-    hammer->SetPosition(400.0f, 400.0f);
+    hammer->SetPosition(400.0f, 100.0f);
     hammer->Update(deltaTime);
     hammer->SetAnimation(static_cast<int>(AnimationSet::HAMMER));
     hammerCollision.UpdateBoundingBox(frameDimensions, false);

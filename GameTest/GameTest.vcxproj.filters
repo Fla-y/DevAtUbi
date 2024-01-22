@@ -30,6 +30,7 @@
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="ObjectPool.cpp" />
+    <ClCompile Include="GameStateManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -67,6 +68,7 @@
     <ClInclude Include="Object.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="ObjectPool.h" />
+    <ClInclude Include="GameStateManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="NextAPI">

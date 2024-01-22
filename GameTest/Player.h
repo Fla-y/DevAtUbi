@@ -23,12 +23,12 @@ public:
     ~Player();
 
     void Move(float deltaTime);
-    void Jump(float deltaTime);
+    void StartJump();
     void Draw();
     bool CheckCollision(const CollisionManager& other) const;
     //void Update(float deltaTime);
     void TriggerDeath();
-    void ReturnToIdle();
+    //void ReturnToIdle();
 
 private:
     std::map<int, DimData> frameDimensions;

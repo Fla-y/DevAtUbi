@@ -2,8 +2,7 @@
 // GameTest.cpp
 //------------------------------------------------------------------------
 #include "stdafx.h"
-#include <windows.h> 
-#include <math.h> 
+#include <windows.h>
 #include <crtdbg.h>
 #include "app\app.h"
 #include "Player.h"
@@ -12,6 +11,7 @@
 #include "LogUtility.h"
 #include "CollisionManager.h"
 #include "Object.h"
+#include "GameStateManager.h"
 
 //------------------------------------------------------------------------
 std::unique_ptr<Player> playerPtr;
@@ -22,6 +22,7 @@ bool isInitSuccessful = true;
 LogUtility logger("game_log.txt", "critical_log.txt");
 AnimationManager animManager;
 
+std::unique_ptr<GameStateManager> gameStateManager;
 
 //------------------------------------------------------------------------
 // Called before first update. Do any initial setup here.
@@ -76,7 +77,10 @@ void Render()
 	playerPtr->Draw();
 	levelMap->DrawFloor();
 	hammerPtr->Draw();
-
+	if (!(playerPtr->isAlive)) {
+		App::Print(400, 400, "You are dead");
+		return;
+	}
 }
 //------------------------------------------------------------------------
 // Add your shutdown code here. Called when the APP_QUIT_KEY is pressed.
