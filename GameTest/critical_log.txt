@@ -1,0 +1,8 @@
+[Tue Jan 23 05:32:52 2024] Player character initialization failed.
+[Tue Jan 23 05:36:47 2024] Player character initialization failed.
+[Tue Jan 23 06:09:08 2024] Player character initialization failed.
+[Tue Jan 23 06:16:01 2024] Player character initialization failed.
+[Tue Jan 23 06:17:12 2024] Player character initialization failed.
+[Tue Jan 23 06:24:19 2024] Player character initialization failed.
+[Tue Jan 23 06:29:59 2024] Player character initialization failed.
+[Tue Jan 23 06:30:49 2024] Player character initialization failed.

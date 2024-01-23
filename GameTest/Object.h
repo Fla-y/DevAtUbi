@@ -26,9 +26,12 @@ public:
 	void Deactivate();
 
 private:
+
+	using CSimpleSpritePtr = std::unique_ptr<CSimpleSprite>;
+
 	LogUtility& logger;
 	AnimationManager& animManager;
-	CSimpleSprite* hammer;
+	CSimpleSpritePtr hammer;
 	CollisionManager hammerCollision;
 	bool isActive;
 	

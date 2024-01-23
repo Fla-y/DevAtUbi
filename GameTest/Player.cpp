@@ -7,7 +7,7 @@
 Player::Player(LogUtility& logger, AnimationManager& animManager, bool& isInitSuccessful) : logger(logger), animManager(animManager),
 isJumping(false), x(400.0f), y(400.0f), velocityY(0.0f),maxHeight(100.0f),
 jumpVelocity(5.0f), sprite(animManager.GetSprite(SpriteType::PLAYER)),
-collisionManager(sprite), isAlive(true),onGround(true)
+collisionManager(std::move(sprite)), isAlive(true),onGround(true)
 {
     if (sprite == nullptr) {
         std::cerr << "Error: Failed to initialize player character." << std::endl;
@@ -15,10 +15,18 @@ collisionManager(sprite), isAlive(true),onGround(true)
         isInitSuccessful = false;
     }
     sprite->SetAnimation(static_cast<int>(AnimationSet::WALK));
-    
+   /* 
+    std::string& spriteName = mySpriteName[PLAYER_SIZE_SAMPLE];
+    if (spriteName.empty()) {
+        spriteName = PLAYER_SIZE_SAMPLE.string();
+    }*/
+
     CSimpleSprite* temp = App::CreateSprite(PLAYER_SIZE_SAMPLE.string().c_str(), 1, 1);
     frameDimensions[0] = { temp->GetHeight(),temp->GetWidth() };
     delete temp;
+
+   /* CSimpleSpritePtr temp{ App::CreateSprite(spriteName.c_str(), 1, 1) };
+    frameDimensions[0] = { temp->GetHeight(),temp->GetWidth() };*/
 
     collisionManager.UpdateBoundingBox(frameDimensions, true);
 
@@ -26,6 +34,7 @@ collisionManager(sprite), isAlive(true),onGround(true)
 
 Player :: ~Player() {
 }
+
 //
 //void Player::ReturnToIdle() {
 //    sprite->SetAnimation(static_cast<int>(AnimationSet::IDLE));

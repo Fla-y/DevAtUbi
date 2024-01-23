@@ -28,6 +28,8 @@ enum class SpriteType
 	HAMMER,
 };
 
+using CSimpleSpritePtr = std::unique_ptr<CSimpleSprite>;
+
 class AnimationManager
 {
 public:
@@ -35,14 +37,16 @@ public:
 	AnimationManager();
 	~AnimationManager();
 
-	CSimpleSprite* GetSprite(SpriteType type);
+	CSimpleSpritePtr GetSprite(SpriteType type);
 	void InitializePlayer();
 	void InitializeHammer();
 
+	std::map<fs::path, std::string> mySpriteName;
+
 private:
 
-	CSimpleSprite* player;
-	CSimpleSprite* sprite;
+	CSimpleSpritePtr player;
+	CSimpleSpritePtr sprite;
 };
 
 #endif

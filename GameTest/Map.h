@@ -22,17 +22,19 @@ public:
     //std::pair<float, float> ConvertPixelToVirtual(int px, int py);
     //--------------------------------------------------
 private:
+    using CSimpleSpritePtr = std::unique_ptr<CSimpleSprite>;
+
     float backgroundSpriteWidth;
-    CSimpleSprite* backgroundSprite;
-    std::vector<CSimpleSprite*> floorTiles;
-    std::vector<CSimpleSprite*> backgroundSprites;
+    CSimpleSpritePtr backgroundSprite;
+    std::vector<CSimpleSpritePtr> floorTiles;
+    std::vector<CSimpleSpritePtr> backgroundSprites;
     int initTileCount,tileSize;
     LogUtility& logger;
 
     void UpdateBackground(float deltaTime);
     void InitializeBackground(bool& isInitSuccessful);
-    void InitializeFloor();
-
+    void InitializeFloor(bool& isInitSuccessful);
+    std::map<fs::path, std::string> mySpriteName;
 };
 
 #endif

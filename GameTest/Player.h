@@ -31,11 +31,15 @@ public:
     //void ReturnToIdle();
 
 private:
+    using CSimpleSpritePtr = std::unique_ptr<CSimpleSprite>;
+
     std::map<int, DimData> frameDimensions;
     LogUtility& logger;
     AnimationManager& animManager;
-    CSimpleSprite* sprite;
+    CSimpleSpritePtr sprite;
     CollisionManager collisionManager;
+
+    std::map<fs::path, std::string> mySpriteName;
    
 
 };

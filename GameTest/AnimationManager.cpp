@@ -5,13 +5,16 @@ AnimationManager::AnimationManager() {
 }
 
 AnimationManager::~AnimationManager() {
-    delete player;
-    delete sprite;
 }
 
+
 void AnimationManager::InitializePlayer() {
-    
-	player = App::CreateSprite(PLAYER.string().c_str(), 6, 9);
+    std::string& spriteName = mySpriteName[PLAYER];
+    if (spriteName.empty()) {
+        spriteName = PLAYER.string();
+    }
+
+    player.reset(App::CreateSprite(spriteName.c_str(), 6, 9));
     player->CreateAnimation(static_cast<int>(AnimationSet::WALK), 1.0f / 12.0f, { 0, 1, 2, 3, 4, 5 });
     player->CreateAnimation(static_cast<int>(AnimationSet::WALK_BACK), 1.0f / 12.0f, { 6,7,8,9,10,11 });
     player->CreateAnimation(static_cast<int>(AnimationSet::IDLE), 1.0f / 5.0f, { 50,51,52,53 });
@@ -28,21 +31,25 @@ void AnimationManager::InitializePlayer() {
 
 void AnimationManager::InitializeHammer()
 {
-    sprite = App::CreateSprite(HAMMER.string().c_str(), 8, 1);
+    std::string& spriteName = mySpriteName[HAMMER];
+    if (spriteName.empty()) {
+        spriteName = HAMMER.string();
+    }
+    sprite.reset( App::CreateSprite(spriteName.c_str(), 8, 1));
     sprite->CreateAnimation(static_cast<int>(AnimationSet::HAMMER), 1.0f / 5.0f, { 0,1,2,3,4,5,6,7 });
     sprite->SetScale(4.0f);
     sprite->SetAngle(3.14159f);
 
 }
 
-CSimpleSprite* AnimationManager::GetSprite(SpriteType type) {
+CSimpleSpritePtr AnimationManager::GetSprite(SpriteType type) {
 
     switch (type)
     {
     case SpriteType::PLAYER:
-        return player;
+        return std::move(player);
     case SpriteType::HAMMER:
-        return sprite;
+        return std::move(player);
     default:
         return nullptr;
     }

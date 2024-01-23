@@ -6,11 +6,11 @@
 
 Map::Map(LogUtility& logger, bool& isInitSuccessful):initTileCount(32),tileSize(32),logger(logger) {
     InitializeBackground(isInitSuccessful);
-    InitializeFloor();
+    InitializeFloor(isInitSuccessful);
 }
 
 Map::~Map() {
-    for (auto tile : floorTiles) {
+   /* for (auto& tile : floorTiles) {
         if (tile != nullptr) {
             delete tile;
         }
@@ -21,8 +21,9 @@ Map::~Map() {
         if (bgSprite != nullptr) {
             delete bgSprite;
         }
-    }
-    backgroundSprites.clear();
+    }*/
+    //backgroundSprites.clear();
+    //floorTiles.clear();
 }
 
 void Map::DrawBackground() {
@@ -51,15 +52,14 @@ void Map::Update(float deltaTime) {
 
     // Move each tile
     for (auto it = floorTiles.begin(); it != floorTiles.end();) {
-        CSimpleSprite* tile = *it;
+        CSimpleSprite& tile = *(*it);
         float x, y;
-        tile->GetPosition(x, y);
+        tile.GetPosition(x, y);
         float newX = x - (SCROLL_SPEED * deltaTime);
-        tile->SetPosition(newX, y);
+        tile.SetPosition(newX, y);
 
         // Check if tile is off-screen
         if (newX + tileWidth < 0) {
-            delete tile; // Delete the off-screen tile
             it = floorTiles.erase(it); // Remove the tile from the vector
         }
         else {
@@ -69,15 +69,15 @@ void Map::Update(float deltaTime) {
 
     // Check if we need to add a new tile at the front
     if (!floorTiles.empty()) {
-        CSimpleSprite* lastTile = floorTiles.back();
+        CSimpleSprite& lastTile = *floorTiles.back();
         float lastTileX, lastTileY;
-        lastTile->GetPosition(lastTileX, lastTileY);
+        lastTile.GetPosition(lastTileX, lastTileY);
 
         // Add a new tile if there's space
         if (lastTileX + tileWidth < APP_VIRTUAL_WIDTH) {
-            CSimpleSprite* newTile = App::CreateSprite(FLOOR_TILE.string().c_str(), 1, 1);
+            CSimpleSpritePtr newTile{ App::CreateSprite(FLOOR_TILE.string().c_str(), 1, 1) };
             newTile->SetPosition(lastTileX + tileWidth, lastTileY);
-            floorTiles.push_back(newTile);
+            floorTiles.push_back(std::move(newTile));
         }
     }
 
@@ -88,35 +88,41 @@ void Map::InitializeBackground(bool& isInitSuccessful)
 {
     const int numBackgroundSprites = 10; // Including buffer sprite
     for (int i = 0; i < numBackgroundSprites; ++i) {
-        CSimpleSprite* bgSprite = App::CreateSprite(BACKGROUND.string().c_str(), 1, 1);
+
+        std::string& spriteName = mySpriteName[BACKGROUND];
+        if (spriteName.empty()) {
+            spriteName = BACKGROUND.string();
+        }
+
+        CSimpleSpritePtr bgSprite{ App::CreateSprite(spriteName.c_str(), 1, 1)};
         bgSprite->SetScale(1.0f);
 
         float spriteWidth = bgSprite->GetWidth();
         bgSprite->SetPosition(i * spriteWidth, APP_VIRTUAL_HEIGHT * 0.5f);
-        backgroundSprites.push_back(bgSprite);
-
         if (bgSprite == nullptr) {
             std::cerr << "Error: Failed to initialize background" << std::endl;
             logger.LogError("Background initialization failed.");
-            isInitSuccessful = false;
         }
+        backgroundSprites.push_back(std::move(bgSprite));
     }
     backgroundSpriteWidth = backgroundSprites.front()->GetWidth();
-
-
 }
 
-void Map::InitializeFloor() {
+void Map::InitializeFloor(bool& isInitSuccessful) {
     for (int i = 0; i < initTileCount; ++i) {
-        CSimpleSprite* tile = App::CreateSprite(FLOOR_TILE.string().c_str(), 1, 1);
+        std::string& spriteName = mySpriteName[FLOOR_TILE];
+        if (spriteName.empty()) {
+            spriteName = FLOOR_TILE.string();
+        }
+
+        CSimpleSpritePtr tile{ App::CreateSprite(spriteName.c_str(), 1, 1) };
         tile->SetScale(1.0f);
         tile->SetPosition(0.0f + i * tileSize, 15.0f);
-        floorTiles.push_back(tile);
         if (tile == nullptr) {
             std::cerr << "Error: Failed to initialize floor tile" << std::endl;
             logger.LogError("floor tile initialization failed.");
-            bool isInitSuccesful = false;
         }
+        floorTiles.push_back(std::move(tile));
     }
 }
 

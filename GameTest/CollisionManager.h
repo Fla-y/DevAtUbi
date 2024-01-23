@@ -18,10 +18,12 @@ struct BoundingBox {
     float bottom;
 };
 
+using CSimpleSpritePtr = std::unique_ptr<CSimpleSprite>;
+
 class CollisionManager
 {
 public:
-    CollisionManager(CSimpleSprite* sprite);
+    CollisionManager(CSimpleSpritePtr sprite);
     void UpdateBoundingBox(std::map<int,DimData>& frameDim, bool isPlayer);
 
     bool CheckCollision(const CollisionManager& other) const;
@@ -29,7 +31,7 @@ public:
     const BoundingBox& GetBoundingBox() const;
 
 private:
-    CSimpleSprite* mySprite;
+    CSimpleSpritePtr mySprite;
     BoundingBox spriteBoundingBox;
     float height, width;
 };

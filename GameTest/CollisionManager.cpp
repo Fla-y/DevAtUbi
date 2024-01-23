@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "CollisionManager.h"
 
-CollisionManager::CollisionManager(CSimpleSprite* sprite) : mySprite(sprite)
+CollisionManager::CollisionManager(CSimpleSpritePtr sprite) : mySprite(std::move(sprite))
 {
 }
 
