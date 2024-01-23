@@ -3,7 +3,7 @@
 #include "Object.h"
 
 Object::Object(LogUtility& logger, AnimationManager& animManager,bool& isInitSuccessful): logger(logger), animManager(animManager), 
-hammer(animManager.GetSprite(SpriteType::HAMMER)), hammerCollision( CollisionManager(std::move(hammer))), isActive(false)
+hammer(animManager.GetSprite(SpriteType::HAMMER)), hammerCollision( CollisionManager(hammer)), isActive(false)
 {
     if (hammer == nullptr) {
         std::cerr << "Error: Failed to initialize hammer." << std::endl;
@@ -15,7 +15,6 @@ hammer(animManager.GetSprite(SpriteType::HAMMER)), hammerCollision( CollisionMan
 
 Object::~Object()
 {
-   
 }
 
 void Object::Animate(float deltaTime)

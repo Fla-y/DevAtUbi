@@ -15,8 +15,8 @@ void AnimationManager::InitializePlayer() {
     }
 
     player.reset(App::CreateSprite(spriteName.c_str(), 6, 9));
-    player->CreateAnimation(static_cast<int>(AnimationSet::WALK), 1.0f / 12.0f, { 0, 1, 2, 3, 4, 5 });
-    player->CreateAnimation(static_cast<int>(AnimationSet::WALK_BACK), 1.0f / 12.0f, { 6,7,8,9,10,11 });
+    player->CreateAnimation(static_cast<int>(AnimationSet::WALK), 1.0f / 11.0f, { 0, 1, 2, 3, 4, 5 });
+    player->CreateAnimation(static_cast<int>(AnimationSet::WALK_BACK), 1.0f / 11.0f, { 6,7,8,9,10,11 });
     player->CreateAnimation(static_cast<int>(AnimationSet::IDLE), 1.0f / 5.0f, { 50,51,52,53 });
     player->CreateAnimation(static_cast<int>(AnimationSet::HURT), 1.0f / 15.0f, { 48,49 });
     player->CreateAnimation(static_cast<int>(AnimationSet::DEATH), 1.0f / 15.0f, { 42,43,44,45,46,47 });
@@ -49,7 +49,7 @@ CSimpleSpritePtr AnimationManager::GetSprite(SpriteType type) {
     case SpriteType::PLAYER:
         return std::move(player);
     case SpriteType::HAMMER:
-        return std::move(player);
+        return std::move(sprite);
     default:
         return nullptr;
     }
