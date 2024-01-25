@@ -8,6 +8,7 @@
 #include "LogUtility.h"
 #include "CollisionManager.h"
 
+using CSimpleSpritePtr = std::unique_ptr<CSimpleSprite>;
 
 class Object
 {
@@ -15,7 +16,7 @@ public:
 
 	Object(LogUtility& logger, AnimationManager& animManager, bool& isInitSuccessful);
 	~Object();
-	void Animate(float deltaTime);
+	void Animate(float deltaTime,float x, float y);
 	void Draw();
 	const CollisionManager& GetCollisionManager() const;
 	void InitializeFrameDim();
@@ -25,15 +26,21 @@ public:
 	void Activate();
 	void Deactivate();
 
-private:
+	void SetPosition(float x, float y);
+	void SetAngle(float a);
+	void SetScale(float s);
+	void GetPosition(float& x, float& y);
+	float GetWidth();
 
-	using CSimpleSpritePtr = std::unique_ptr<CSimpleSprite>;
+private:
 
 	LogUtility& logger;
 	AnimationManager& animManager;
 	CSimpleSpritePtr hammer;
 	CollisionManager hammerCollision;
 	bool isActive;
+
+	void initializeHammer();
 	
 }; 
 

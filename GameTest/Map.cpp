@@ -4,26 +4,15 @@
 #include "App/main.h"
 
 
-Map::Map(LogUtility& logger, bool& isInitSuccessful):initTileCount(32),tileSize(32),logger(logger) {
+Map::Map(LogUtility& logger, AnimationManager& animManager, bool& isInitSuccessful):
+    initTileCount(32),tileSize(32),logger(logger), animManager(animManager), 
+    hammerPool(15,logger,animManager,isInitSuccessful)
+{
     InitializeBackground(isInitSuccessful);
     InitializeFloor(isInitSuccessful);
 }
 
 Map::~Map() {
-   /* for (auto& tile : floorTiles) {
-        if (tile != nullptr) {
-            delete tile;
-        }
-    }
-    floorTiles.clear();
-
-    for (auto bgSprite : backgroundSprites) {
-        if (bgSprite != nullptr) {
-            delete bgSprite;
-        }
-    }*/
-    //backgroundSprites.clear();
-    //floorTiles.clear();
 }
 
 void Map::DrawBackground() {
@@ -43,6 +32,15 @@ void Map::DrawFloor()
         }
         else {
             tile->Draw();
+        }
+    }
+}
+
+void Map::DrawObject() {
+    auto activeHammers=hammerPool.GetActiveObjects();
+    for (auto& hammer : activeHammers) {
+        if (hammer != nullptr) {
+            hammer->Draw(); // Draw each active hammer
         }
     }
 }
@@ -82,6 +80,7 @@ void Map::Update(float deltaTime) {
     }
 
     UpdateBackground(deltaTime);
+    UpdateObstacles(deltaTime);
 }
 
 void Map::InitializeBackground(bool& isInitSuccessful)
@@ -125,7 +124,7 @@ void Map::InitializeFloor(bool& isInitSuccessful) {
         floorTiles.push_back(std::move(tile));
     }
 }
-
+   
 void Map::UpdateBackground(float deltaTime)
 {
     for (auto& bgSprite : backgroundSprites) {
@@ -141,4 +140,22 @@ void Map::UpdateBackground(float deltaTime)
             bgSprite->SetPosition(lastSpriteX + backgroundSpriteWidth, lastSpriteY);
         }
     }
+}
+
+void Map::UpdateObstacles(float deltaTime) {
+    spawnTimer -= deltaTime;
+    if (spawnTimer <= 0) {
+        auto newObject = hammerPool.GetHammer(); // Retrieve an object from the pool
+        if (newObject != nullptr) {
+            // Set initial position (right of the screen)
+            newObject->SetPosition(APP_VIRTUAL_WIDTH, 100.0f);
+        }
+        spawnTimer = 100.0f; // Reset timer
+    }
+
+    hammerPool.Update(deltaTime); // Update all active objects
+}
+
+ObjectPool& Map::GetHammerPool() {
+    return hammerPool;
 }

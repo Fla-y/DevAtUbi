@@ -12,6 +12,7 @@
 #include "CollisionManager.h"
 #include "Object.h"
 #include "GameStateManager.h"
+#include "ObjectPool.h"
 
 //------------------------------------------------------------------------
 std::unique_ptr<Player> playerPtr;
@@ -33,9 +34,11 @@ void Init()
 
 	animManager.InitializePlayer();
 	animManager.InitializeHammer();
-	levelMap = std::make_unique <Map>(logger, isInitSuccessful);
+	levelMap = std::make_unique <Map>(logger, animManager, isInitSuccessful);
 	playerPtr = std::make_unique <Player>(logger, animManager,isInitSuccessful);
-	hammerPtr = std::make_unique <Object>(logger, animManager,isInitSuccessful); 
+	//hammerPtr = std::make_unique <Object>(logger, animManager,isInitSuccessful); 
+
+
 }
 
 //------------------------------------------------------------------------
@@ -48,12 +51,21 @@ void Update(float deltaTime)
 		return; 
 	}
 	playerPtr->Move(deltaTime);
-	hammerPtr->Animate(deltaTime);
+	//hammerPtr->Animate(deltaTime);
 	levelMap->Update(deltaTime);
 
-	if (playerPtr->CheckCollision(hammerPtr->GetCollisionManager())) {
-		playerPtr->TriggerDeath();
+	auto& hammerPool = levelMap->GetHammerPool(); // Get the hammer pool
+	auto activeHammers = hammerPool.GetActiveObjects(); // Get active hammers
+	for (const auto& hammer : activeHammers) {
+		if (playerPtr->CheckCollision(hammer->GetCollisionManager())) {
+			playerPtr->TriggerDeath();
+			break; // Exit the loop as the player is dead
+		}
 	}
+
+	/*if (playerPtr->CheckCollision(hammerPtr->GetCollisionManager())) {
+		playerPtr->TriggerDeath();
+	}*/
 	////------------------------------------------------------------------------
 	//// Sample Sound.
 	////------------------------------------------------------------------------
@@ -76,7 +88,9 @@ void Render()
 	levelMap->DrawBackground();
 	playerPtr->Draw();
 	levelMap->DrawFloor();
-	hammerPtr->Draw();
+	levelMap->DrawObject();
+	//hammerPtr->Draw();
+
 	if (!(playerPtr->isAlive)) {
 		App::Print(400, 400, "You are dead");
 		return;

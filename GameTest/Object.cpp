@@ -17,9 +17,9 @@ Object::~Object()
 {
 }
 
-void Object::Animate(float deltaTime)
+void Object::Animate(float deltaTime,float x,float y)  //y=100.0f
 {
-    hammer->SetPosition(400.0f, 100.0f);
+    hammer->SetPosition(APP_VIRTUAL_WIDTH + hammer->GetWidth(), 100.0f);
     hammer->Update(deltaTime);
     hammer->SetAnimation(static_cast<int>(AnimationSet::HAMMER));
     hammerCollision.UpdateBoundingBox(frameDimensions, false);
@@ -58,7 +58,6 @@ void Object::InitializeFrameDim()
     frameDimensions[7] = { temp->GetHeight(),temp->GetWidth() };
 }
 
-
 bool Object::IsActive() const
 {
     return isActive;
@@ -73,3 +72,29 @@ void Object::Deactivate()
 {
     isActive = false;
 }
+
+void Object::SetPosition(float x, float y)
+{
+    hammer->SetPosition(x, y);
+}
+
+void Object::SetAngle(float a)
+{
+    hammer->SetAngle(a);
+}
+
+void Object::SetScale(float s)
+{
+    hammer->SetScale(s);
+}
+
+void Object::GetPosition(float& x, float& y)
+{
+    hammer->GetPosition(x, y);
+}
+
+float Object::GetWidth()
+{
+    return hammer->GetWidth();
+}
+
