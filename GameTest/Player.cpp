@@ -31,10 +31,11 @@ collisionManager(sprite), isAlive(true),onGround(true)
 Player :: ~Player() {
 }
 
-//
-//void Player::ReturnToIdle() {
-//    sprite->SetAnimation(static_cast<int>(AnimationSet::IDLE));
-//}
+
+void Player::ReturnToIdle(float deltaTime) {
+    sprite->Update(deltaTime);
+    sprite->SetAnimation(static_cast<int>(AnimationSet::IDLE));
+}
 
 void Player::Move(float deltaTime) {
     
@@ -49,7 +50,7 @@ void Player::Move(float deltaTime) {
     else if (App::GetController().GetLeftThumbStickX() < -0.5f) {
         sprite->SetAnimation(static_cast<int>(AnimationSet::WALK_BACK));
         sprite->GetPosition(x, y);
-        x -= 2.0f;
+        x -= 2.2f;
         sprite->SetPosition(x, y);
     }
     else

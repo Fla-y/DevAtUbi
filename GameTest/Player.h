@@ -22,6 +22,7 @@ public:
     Player(LogUtility& logger, AnimationManager& animManager,bool& isInitSuccessful);
     ~Player();
 
+    void ReturnToIdle(float deltaTime);
     void Move(float deltaTime);
     void StartJump();
     void Draw();

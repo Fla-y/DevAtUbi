@@ -6,9 +6,9 @@ Timer::Timer(LogUtility& logger): isRunning(false),logger(logger)
 {
 }
 
-void Timer::start()
+void Timer::start(bool& hasStarted)
 {
-    if (!isRunning) {
+    if (!isRunning && hasStarted) {
         startTime = std::chrono::high_resolution_clock::now();
         isRunning = true;
     }

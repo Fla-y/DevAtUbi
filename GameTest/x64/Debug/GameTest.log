@@ -1,8 +1,4 @@
-﻿  GameTest.cpp
-  LogUtility.cpp
-  Timer.cpp
-  Generazione del codice in corso...
-  LINK : C:\Users\Fla\Codice\[DevAtUbi]\x64\Debug\GameTest.exe non trovato o non compilato dall'ultimo collegamento incrementale; verrà eseguito il collegamento completo
+﻿  Obstacle.cpp
   GameTest.vcxproj -> C:\Users\Fla\Codice\[DevAtUbi]\x64\Debug\GameTest.exe
   C:\Users\Fla\Codice\[DevAtUbi]\\GameTest\glut\bin\x64\freeglut.dll
   1 File copiati

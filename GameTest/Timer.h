@@ -10,7 +10,7 @@ class Timer
 {
 public:
     Timer(LogUtility& logger);
-    void start();
+    void start(bool& hasStarted);
     void stop();
     void print();
 

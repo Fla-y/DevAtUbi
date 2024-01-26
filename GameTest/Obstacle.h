@@ -1,5 +1,5 @@
-#ifndef OBJECT_H
-#define OBJECT_H
+#ifndef OBSTACLE_H
+#define OBSTACLE_H
 
 #include "stdafx.h"
 #include "app/app.h"
@@ -9,23 +9,21 @@
 #include "CollisionManager.h"
 
 
-class Object
+class Obstacle
 {
 public:
 
-	Object(LogUtility& logger, AnimationManager& animManager, bool& isInitSuccessful, int& loopCounter, float& SCROLL_SPEED);
-	~Object();
+	Obstacle(LogUtility& logger, AnimationManager& animManager, bool& isInitSuccessful, int& loopCounter, float& SCROLL_SPEED);
+	~Obstacle();
 	void Animate(float deltaTime);
 	void Draw();
 	const CollisionManager& GetCollisionManager() const;
 	void InitializeFrameDim();
 	std::map<int, DimData> frameDimensions;
-
-	bool IsActive() const;
-	void Activate();
-	void Deactivate();
 	CSimpleSpritePtr hammer;
 	int counter, copyCounter;
+	const float HAMMERX = 1024.0f;
+	const float HAMMERY = 98.0f;
 
 private:
 
@@ -36,6 +34,8 @@ private:
 	//CSimpleSpritePtr hammer;
 	CollisionManager hammerCollision;
 	bool isActive;
+
+	void RandomizeObstacle(float y);
 	
 }; 
 

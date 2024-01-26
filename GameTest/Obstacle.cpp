@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "App/app.h"
-#include "Object.h"
+#include "Obstacle.h"
 
-Object::Object(LogUtility& logger, AnimationManager& animManager, bool& isInitSuccessful, int& loopCounter,float& SCROLL_SPEED) :
+Obstacle::Obstacle(LogUtility& logger, AnimationManager& animManager, bool& isInitSuccessful, int& loopCounter,float& SCROLL_SPEED) :
     logger(logger), animManager(animManager),hammer(animManager.GetSprite(SpriteType::HAMMER)),
     hammerCollision(CollisionManager(hammer)),isActive(false), counter(loopCounter), copyCounter(0), scrollSpeed(SCROLL_SPEED)
 {
@@ -14,11 +14,11 @@ Object::Object(LogUtility& logger, AnimationManager& animManager, bool& isInitSu
     InitializeFrameDim();
 }
 
-Object::~Object()
+Obstacle::~Obstacle()
 {
 }
 
-void Object::Animate(float deltaTime)
+void Obstacle::Animate(float deltaTime)
 {
     float x, y;
     hammer->GetPosition(x, y);
@@ -29,7 +29,7 @@ void Object::Animate(float deltaTime)
     hammerCollision.UpdateBoundingBox(frameDimensions, false);
     //check if hammer is off screen
     if (newX + hammer->GetWidth() < 0) {
-        hammer->SetPosition(1024.0f, y);
+        RandomizeObstacle(y);
         counter++;
         copyCounter++;
         if (copyCounter >= 3) {
@@ -41,17 +41,17 @@ void Object::Animate(float deltaTime)
     }
 }
 
-void Object::Draw() {
+void Obstacle::Draw() {
     hammer->Draw();
 }
 
-const CollisionManager& Object::GetCollisionManager() const
+const CollisionManager& Obstacle::GetCollisionManager() const
 {
     return hammerCollision;
 }
 
 //different frames have different dimensions
-void Object::InitializeFrameDim()
+void Obstacle::InitializeFrameDim()
 {
     CSimpleSpritePtr temp{ App::CreateSprite(HAMMER_SIZE_0.string().c_str(), 1, 1) };
     frameDimensions[0] = { temp->GetHeight(),temp->GetWidth() };
@@ -74,18 +74,26 @@ void Object::InitializeFrameDim()
     frameDimensions[7] = { temp->GetHeight(),temp->GetWidth() };
 }
 
+void Obstacle::RandomizeObstacle(float y) {
+    std::random_device rd;  
+    std::mt19937 gen(rd()); 
+    std::uniform_int_distribution<> distrib(0, 8); 
+    // Generate a random number between 0 and 8
+    int randomNumber = distrib(gen);
 
-bool Object::IsActive() const
-{
-    return isActive;
-}
-
-void Object::Activate()
-{
-    isActive = true;
-}
-
-void Object::Deactivate()
-{
-    isActive = false;
+    if (randomNumber == 5) {
+        hammer->SetScale(5.0f);
+        hammer->SetAngle(3.14159f);
+        hammer->SetPosition(HAMMERX, 98.0f);
+    }
+    else if (randomNumber == 3) {
+        hammer->SetScale(8.0f);
+        hammer->SetAngle(0.0f);
+        hammer->SetPosition(HAMMERX, 550.0f);
+    }
+    else {
+        hammer->SetScale(3.0f);
+        hammer->SetAngle(3.14159f);
+        hammer->SetPosition(HAMMERX, 98.0f);
+    }
 }

@@ -10,7 +10,7 @@
 #include "AnimationManager.h"
 #include "LogUtility.h"
 #include "CollisionManager.h"
-#include "Object.h"
+#include "Obstacle.h"
 #include "GameStateManager.h"
 #include "filePath.h"
 #include "Timer.h"
@@ -19,9 +19,9 @@
 //------------------------------------------------------------------------
 std::unique_ptr<Player> playerPtr;
 std::unique_ptr<Map> levelMap;
-std::unique_ptr<Object> hammerPtr;/*
-std::unique_ptr<Object> hammerPtr2;
-std::unique_ptr<Object> hammerPtr3;*/
+std::unique_ptr<Obstacle> hammerPtr;/*
+std::unique_ptr<Obstacle> hammerPtr2;
+std::unique_ptr<Obstacle> hammerPtr3;*/
 
 bool isInitSuccessful = true;
 LogUtility logger("game_log.txt", "critical_log.txt");
@@ -30,6 +30,7 @@ int loopCounter = 0;
 std::unique_ptr<GameStateManager> gameStateManager;
 Timer gameTime(logger);
 float SCROLL_SPEED = 0.25f;
+bool startGame;
 
 
 //------------------------------------------------------------------------
@@ -41,12 +42,12 @@ void Init()
 	animManager.InitializeHammer();
 	levelMap = std::make_unique <Map>(logger, isInitSuccessful,loopCounter,SCROLL_SPEED);
 	playerPtr = std::make_unique <Player>(logger, animManager,isInitSuccessful);
-	hammerPtr = std::make_unique <Object>(logger, animManager,isInitSuccessful,loopCounter,SCROLL_SPEED);
-	/*hammerPtr2 = std::make_unique <Object>(logger, animManager, isInitSuccessful);
-	hammerPtr3 = std::make_unique <Object>(logger, animManager, isInitSuccessful);*/
-	hammerPtr->hammer->SetPosition(1024.0f, 98.0f);
+	hammerPtr = std::make_unique <Obstacle>(logger, animManager,isInitSuccessful,loopCounter,SCROLL_SPEED);
+	/*hammerPtr2 = std::make_unique <Obstacle>(logger, animManager, isInitSuccessful);
+	hammerPtr3 = std::make_unique <Obstacle>(logger, animManager, isInitSuccessful);*/
+	//hammerPtr->hammer->SetPosition(1024.0f, 98.0f);
 	App::PlaySound(SOUNDTRACK.string().c_str());
-	gameTime.start();
+	startGame = false;
 }
 
 //------------------------------------------------------------------------
@@ -58,21 +59,30 @@ void Update(float deltaTime)
 	if (!isInitSuccessful) {
 		return; 
 	}	
-	playerPtr->Move(deltaTime);
-	hammerPtr->Animate(deltaTime);
-	levelMap->Update(deltaTime);
+	if (!startGame) {
+		playerPtr->ReturnToIdle(deltaTime);
+		if (App::IsKeyPressed(VK_SPACE)) {
+			startGame = true;
+			gameTime.start(startGame);
+		}
+	}
+	else {
 
-	if (playerPtr->CheckCollision(hammerPtr->GetCollisionManager())) {
-		playerPtr->TriggerDeath();
-		gameTime.stop();
-		if (App::IsSoundPlaying(SOUNDTRACK.string().c_str()) || App::IsSoundPlaying(YOU_ARE_DEAD.string().c_str())) {
-			App::StopSound(SOUNDTRACK.string().c_str());
-			if (!App::IsSoundPlaying(YOU_ARE_DEAD.string().c_str())) {
-				App::PlaySound(YOU_ARE_DEAD.string().c_str());
+		playerPtr->Move(deltaTime);
+		hammerPtr->Animate(deltaTime);
+		levelMap->Update(deltaTime);
+
+		if (playerPtr->CheckCollision(hammerPtr->GetCollisionManager())) {
+			playerPtr->TriggerDeath();
+			gameTime.stop();
+			if (App::IsSoundPlaying(SOUNDTRACK.string().c_str()) || App::IsSoundPlaying(YOU_ARE_DEAD.string().c_str())) {
+				App::StopSound(SOUNDTRACK.string().c_str());
+				if (!App::IsSoundPlaying(YOU_ARE_DEAD.string().c_str())) {
+					App::PlaySound(YOU_ARE_DEAD.string().c_str());
+				}
 			}
 		}
 	}
-	
 }
 
 //------------------------------------------------------------------------
@@ -94,6 +104,11 @@ void Render()
 		return;
 	}
 	gameTime.print();
+
+	if (!startGame) {
+		App::Print(400.0f, 400.0f, "Press the Space bar to start!", 0.0f, 0.0f, 0.0f, GLUT_BITMAP_9_BY_15);
+		App::Print(380.0f, 340.0f, "Press 'W' to jump, 'A' and 'D' to move ", 0.0f, 0.0f, 0.0f, GLUT_BITMAP_8_BY_13);
+	}
 }
 //------------------------------------------------------------------------
 // Add your shutdown code here. Called when the APP_QUIT_KEY is pressed.

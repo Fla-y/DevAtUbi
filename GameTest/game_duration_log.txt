@@ -1,1 +1,10 @@
 [Fri Jan 26 01:29:48 2024] Game Duration: 21 seconds
+[Fri Jan 26 01:55:08 2024] Game Duration: 2 seconds
+[Fri Jan 26 01:56:28 2024] Game Duration: 2 seconds
+[Fri Jan 26 01:57:36 2024] Game Duration: 1 seconds
+[Fri Jan 26 02:07:06 2024] Game Duration: 17 seconds
+[Fri Jan 26 02:17:26 2024] Game Duration: 38 seconds
+[Fri Jan 26 02:30:34 2024] Game Duration: 25 seconds
+[Fri Jan 26 02:47:05 2024] Game Duration: 22 seconds
+[Fri Jan 26 02:56:29 2024] Game Duration: 25 seconds
+[Fri Jan 26 02:57:31 2024] Game Duration: 35 seconds
