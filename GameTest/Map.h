@@ -4,31 +4,28 @@
 #include "stdafx.h"
 #include "app/app.h"
 #include "LogUtility.h"
+#include "filePath.h"
 
-const float SCROLL_SPEED = 0.15f; // Pixels per second
+//base SCROLL_SPEED = 0.25f; 
 
 class Map
 {
 public:
-    Map(LogUtility& logger, bool& isInitSuccessful);
+    Map(LogUtility& logger, bool& isInitSuccessful, int& loopCounter, float& SCROLL_SPEED);
     ~Map();
 
     void DrawBackground();
     void DrawFloor();
     void Update(float deltaTime);
-
-
-    //I need to find a better place for it
-    //std::pair<float, float> ConvertPixelToVirtual(int px, int py);
-    //--------------------------------------------------
+    
 private:
     using CSimpleSpritePtr = std::unique_ptr<CSimpleSprite>;
-
+    float& scrollSpeed;
     float backgroundSpriteWidth;
     CSimpleSpritePtr backgroundSprite;
     std::vector<CSimpleSpritePtr> floorTiles;
     std::vector<CSimpleSpritePtr> backgroundSprites;
-    int initTileCount,tileSize;
+    int initTileCount,tileSize,loopCounter;
     LogUtility& logger;
 
     void UpdateBackground(float deltaTime);

@@ -2,8 +2,9 @@
 #include "App/app.h"
 #include "Object.h"
 
-Object::Object(LogUtility& logger, AnimationManager& animManager,bool& isInitSuccessful): logger(logger), animManager(animManager), 
-hammer(animManager.GetSprite(SpriteType::HAMMER)), hammerCollision( CollisionManager(hammer)), isActive(false)
+Object::Object(LogUtility& logger, AnimationManager& animManager, bool& isInitSuccessful, int& loopCounter,float& SCROLL_SPEED) :
+    logger(logger), animManager(animManager),hammer(animManager.GetSprite(SpriteType::HAMMER)),
+    hammerCollision(CollisionManager(hammer)),isActive(false), counter(loopCounter), copyCounter(0), scrollSpeed(SCROLL_SPEED)
 {
     if (hammer == nullptr) {
         std::cerr << "Error: Failed to initialize hammer." << std::endl;
@@ -19,10 +20,25 @@ Object::~Object()
 
 void Object::Animate(float deltaTime)
 {
-    hammer->SetPosition(400.0f, 100.0f);
+    float x, y;
+    hammer->GetPosition(x, y);
+    float newX = x - (scrollSpeed * deltaTime);
+    hammer->SetPosition(newX, y);
     hammer->Update(deltaTime);
     hammer->SetAnimation(static_cast<int>(AnimationSet::HAMMER));
     hammerCollision.UpdateBoundingBox(frameDimensions, false);
+    //check if hammer is off screen
+    if (newX + hammer->GetWidth() < 0) {
+        hammer->SetPosition(1024.0f, y);
+        counter++;
+        copyCounter++;
+        if (copyCounter >= 3) {
+            scrollSpeed += 0.03f;
+            copyCounter = 0;
+            if (scrollSpeed > 1.6f)
+                scrollSpeed = 1.6f;
+        }
+    }
 }
 
 void Object::Draw() {

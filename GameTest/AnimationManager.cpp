@@ -37,7 +37,7 @@ void AnimationManager::InitializeHammer()
     }
     sprite.reset( App::CreateSprite(spriteName.c_str(), 8, 1));
     sprite->CreateAnimation(static_cast<int>(AnimationSet::HAMMER), 1.0f / 5.0f, { 0,1,2,3,4,5,6,7 });
-    sprite->SetScale(4.0f);
+    sprite->SetScale(3.0f);
     sprite->SetAngle(3.14159f);
 
 }

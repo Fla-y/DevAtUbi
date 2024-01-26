@@ -16,6 +16,30 @@ void LogUtility::LogCriticalError(const std::string& errorMessage)
     WriteLog(criticalLogFileName, errorMessage);
 }
 
+void LogUtility::LogGameDuration(long long durationSeconds)
+{
+    std::string durationLogFileName = "game_duration_log.txt";
+
+    CreateLogFile(durationLogFileName, true); // Create or append to the file
+    std::ofstream logFile(durationLogFileName, std::ios::app); // Open in append mode
+    if (logFile.is_open()) {
+        logFile << "[" << GetCurrentTimeFormatted() << "] Game Duration: " << durationSeconds << " seconds" << std::endl;
+        logFile.close();
+    }
+    else {
+        std::cerr << "Unable to open duration log file: " << durationLogFileName << std::endl;
+    }
+}
+
+std::string LogUtility::GetCurrentTimeFormatted()
+{
+    auto now = std::chrono::system_clock::now();
+    auto time = std::chrono::system_clock::to_time_t(now);
+    std::string timeStr = std::ctime(&time);
+    timeStr.pop_back(); // Remove the newline character
+    return timeStr;
+}
+
 void LogUtility::CreateLogFile(const std::string& fileName, bool append)
 {
     std::ofstream logFile;

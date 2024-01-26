@@ -6,7 +6,7 @@
 
 Player::Player(LogUtility& logger, AnimationManager& animManager, bool& isInitSuccessful) : logger(logger), animManager(animManager),
 isJumping(false), x(400.0f), y(400.0f), velocityY(0.0f),maxHeight(100.0f),
-jumpVelocity(5.0f), sprite(animManager.GetSprite(SpriteType::PLAYER)),
+jumpVelocity(4.0f), sprite(animManager.GetSprite(SpriteType::PLAYER)),
 collisionManager(sprite), isAlive(true),onGround(true)
 {
     if (sprite == nullptr) {
@@ -43,17 +43,17 @@ void Player::Move(float deltaTime) {
     if (App::GetController().GetLeftThumbStickX() > 0.5f) {
         sprite->SetAnimation(static_cast<int>(AnimationSet::WALK_FASTER));
         sprite->GetPosition(x, y);
-        x += 1.0f;
+        x += 2.0f;
         sprite->SetPosition(x, y);
     }
     else if (App::GetController().GetLeftThumbStickX() < -0.5f) {
         sprite->SetAnimation(static_cast<int>(AnimationSet::WALK_BACK));
         sprite->GetPosition(x, y);
-        x -= 1.0f;
+        x -= 2.0f;
         sprite->SetPosition(x, y);
     }
     else
-        sprite->SetAnimation(static_cast<int>(AnimationSet::WALK)); //ReturnToIdle();
+        sprite->SetAnimation(static_cast<int>(AnimationSet::WALK)); 
 
     if (App::GetController().GetLeftThumbStickY() > 0.5f && !isJumping && onGround) {
         StartJump();
@@ -66,7 +66,17 @@ void Player::Move(float deltaTime) {
         collisionManager.UpdateBoundingBox(frameDimensions, true);
         y += velocityY * deltaTime;
         sprite->SetPosition(x, y);
-        velocityY += -0.03f * deltaTime;
+        velocityY += -0.02f * deltaTime;
+        if (App::GetController().GetLeftThumbStickX() > 0.5f) {
+            sprite->GetPosition(x, y);
+            x += 8.0f;
+            sprite->SetPosition(x, y);
+        }
+        if (App::GetController().GetLeftThumbStickX() < -0.5f) {
+            sprite->GetPosition(x, y);
+            x -= 8.0f;
+            sprite->SetPosition(x, y);
+        }
         // Check for collision with the ground
         if (y < 150.0f) {
             y = 150.0f;

@@ -1,10 +1,11 @@
 #include "stdafx.h"
-#include "filePath.h"
 #include "Map.h"
 #include "App/main.h"
 
 
-Map::Map(LogUtility& logger, bool& isInitSuccessful):initTileCount(32),tileSize(32),logger(logger) {
+Map::Map(LogUtility& logger, bool& isInitSuccessful, int& loopCounter, float& SCROLL_SPEED):
+    initTileCount(32),tileSize(32),logger(logger),loopCounter(loopCounter), scrollSpeed(SCROLL_SPEED)
+{
     InitializeBackground(isInitSuccessful);
     InitializeFloor(isInitSuccessful);
 }
@@ -55,7 +56,7 @@ void Map::Update(float deltaTime) {
         CSimpleSprite& tile = *(*it);
         float x, y;
         tile.GetPosition(x, y);
-        float newX = x - (SCROLL_SPEED * deltaTime);
+        float newX = x - (scrollSpeed * deltaTime);
         tile.SetPosition(newX, y);
 
         // Check if tile is off-screen
@@ -131,7 +132,7 @@ void Map::UpdateBackground(float deltaTime)
     for (auto& bgSprite : backgroundSprites) {
         float x, y;
         bgSprite->GetPosition(x, y);
-        float newX = x - (SCROLL_SPEED * deltaTime);
+        float newX = x - (scrollSpeed * deltaTime);
         bgSprite->SetPosition(newX, y);
 
         // Reset and reuse the sprite that goes off-screen
