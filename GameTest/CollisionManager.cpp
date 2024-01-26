@@ -9,7 +9,7 @@ void CollisionManager::UpdateBoundingBox(std::map<int,DimData>& frameDim, bool i
 {
     if (mySprite == nullptr) return;
 
-    if (isPlayer) {  //Player sprite has the same dimensions for all the frames
+    if (isPlayer) {  //Player and box sprites have the same dimensions for all the frames
         width = frameDim.at(0).width;
         height = frameDim.at(0).height;
     }
@@ -29,7 +29,7 @@ void CollisionManager::UpdateBoundingBox(std::map<int,DimData>& frameDim, bool i
     spriteBoundingBox.bottom = (y - (height * scale) / 2.0f) + 10.0f;
 }
 
-// Method to check for collision with another sprite
+//check for collision with another sprite
 bool CollisionManager::CheckCollision(const CollisionManager& other) const {
     const BoundingBox& otherBox = other.spriteBoundingBox;
     return !(spriteBoundingBox.left > otherBox.right || spriteBoundingBox.right < otherBox.left ||

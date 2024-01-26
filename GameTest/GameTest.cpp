@@ -1,6 +1,4 @@
-//------------------------------------------------------------------------
-// GameTest.cpp
-//------------------------------------------------------------------------
+
 #include "stdafx.h"
 #include <windows.h>
 #include <crtdbg.h>
@@ -11,13 +9,11 @@
 #include "LogUtility.h"
 #include "CollisionManager.h"
 #include "Obstacle.h"
-#include "GameStateManager.h"
 #include "filePath.h"
 #include "Timer.h"
 #include "Object.h"
 
 
-//------------------------------------------------------------------------
 std::unique_ptr<Player> playerPtr;
 std::unique_ptr<Map> levelMap;
 std::unique_ptr<Obstacle> hammerPtr;
@@ -33,29 +29,26 @@ float SCROLL_SPEED = 0.25f;
 bool startGame,endScreen;
 
 
-//------------------------------------------------------------------------
-// Called before first update. Do any initial setup here.
-//------------------------------------------------------------------------
 void Init()
 {
 	animManager.InitializePlayer();
 	animManager.InitializeHammer();
-	animManager.Initializebox();
+	animManager.InitializeBox();
+
 	levelMap = std::make_unique <Map>(logger, isInitSuccessful,loopCounter,SCROLL_SPEED);
 	playerPtr = std::make_unique <Player>(logger, animManager,isInitSuccessful);
 	hammerPtr = std::make_unique <Obstacle>(logger, animManager,isInitSuccessful,loopCounter,SCROLL_SPEED);
 	boxPtr = std::make_unique<Object>(logger, animManager, isInitSuccessful,SCROLL_SPEED);
-	App::PlaySound(SOUNDTRACK.string().c_str(),true);
+	
 	startGame = false;
 	boxCollected = 0;
 	totalBox = 0;
 	endScreen = false;
+
+	App::PlaySound(SOUNDTRACK.string().c_str(), true);
 }
 
-//------------------------------------------------------------------------
-// Update your simulation here. deltaTime is the elapsed time since the last update in ms.
-// This will be called at no greater frequency than the value of APP_MAX_FRAME_RATE
-//------------------------------------------------------------------------
+
 void Update(float deltaTime)
 {
 	if (!isInitSuccessful) {
@@ -109,14 +102,11 @@ void Update(float deltaTime)
 	}
 }
 
-//------------------------------------------------------------------------
-// Add your display calls here (DrawLine,Print, DrawSprite.) 
-// See App.h 
-//------------------------------------------------------------------------
+
 void Render()
 {
 	if (!isInitSuccessful) {
-		App::Print(400, 400, "Initialization Failed! Please restart the game.");
+		App::Print(380, 400, "Initialization Failed! Please restart the game.");
 		return; 
 	}
 
@@ -136,7 +126,7 @@ void Render()
 		gameTime.print();
 
 		std::string countStr = "Box collected: " + std::to_string(totalBox);
-		App::Print(100.0f, 730.0f, countStr.c_str(), 0.0f, 0.0f, 0.0f, GLUT_BITMAP_9_BY_15);
+		App::Print(98.0f, 730.0f, countStr.c_str(), 0.0f, 0.0f, 0.0f, GLUT_BITMAP_9_BY_15);
 
 		if (playerPtr->isInvincible) {
 			App::Print(380.0f, 500.0f, "Power-up unlocked, you are Invincible!", 0.0f, 0.0f, 0.0f, GLUT_BITMAP_9_BY_15);
@@ -149,10 +139,7 @@ void Render()
 	}
 	
 }
-//------------------------------------------------------------------------
-// Add your shutdown code here. Called when the APP_QUIT_KEY is pressed.
-// Just before the app exits.
-//------------------------------------------------------------------------
+
 void Shutdown()
 {
 }

@@ -7,7 +7,6 @@
 #include "AnimationManager.h"
 #include "LogUtility.h"
 #include "CollisionManager.h"
-#include "Object.h"
 
 using CSimpleSpritePtr = std::unique_ptr<CSimpleSprite>;
 

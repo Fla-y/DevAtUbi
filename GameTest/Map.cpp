@@ -11,20 +11,6 @@ Map::Map(LogUtility& logger, bool& isInitSuccessful, int& loopCounter, float& SC
 }
 
 Map::~Map() {
-   /* for (auto& tile : floorTiles) {
-        if (tile != nullptr) {
-            delete tile;
-        }
-    }
-    floorTiles.clear();
-
-    for (auto bgSprite : backgroundSprites) {
-        if (bgSprite != nullptr) {
-            delete bgSprite;
-        }
-    }*/
-    //backgroundSprites.clear();
-    //floorTiles.clear();
 }
 
 void Map::DrawBackground() {
@@ -61,7 +47,7 @@ void Map::Update(float deltaTime) {
 
         // Check if tile is off-screen
         if (newX + tileWidth < 0) {
-            it = floorTiles.erase(it); // Remove the tile from the vector
+            it = floorTiles.erase(it); 
         }
         else {
             ++it;
@@ -74,7 +60,7 @@ void Map::Update(float deltaTime) {
         float lastTileX, lastTileY;
         lastTile.GetPosition(lastTileX, lastTileY);
 
-        // Add a new tile if there's space
+        // Add a new tile
         if (lastTileX + tileWidth < APP_VIRTUAL_WIDTH) {
             CSimpleSpritePtr newTile{ App::CreateSprite(FLOOR_TILE.string().c_str(), 1, 1) };
             newTile->SetPosition(lastTileX + tileWidth, lastTileY);

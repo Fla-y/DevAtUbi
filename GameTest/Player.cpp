@@ -59,13 +59,13 @@ void Player::Move(float deltaTime) {
         if (isInvincible) {
             sprite->SetAnimation(static_cast<int>(AnimationSet::POWER_UP));
             sprite->GetPosition(x, y);
-            x -= 2.0f;
+            x -= 2.3f;
             sprite->SetPosition(x, y);
         }
         else {
             sprite->SetAnimation(static_cast<int>(AnimationSet::WALK_BACK));
             sprite->GetPosition(x, y);
-            x -= 2.2f;
+            x -= 2.3f;
             sprite->SetPosition(x, y);
         }
     }

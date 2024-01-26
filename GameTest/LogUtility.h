@@ -2,7 +2,6 @@
 #define LOG_UTILITY_H
 
 #include "stdafx.h"
-#include <chrono>
 #include <ctime>
 
 

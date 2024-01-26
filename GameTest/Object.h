@@ -28,7 +28,6 @@ private:
 	CollisionManager boxCollision;
 	std::map<int, DimData> frameDimensions;
 
-	bool RandomSpawn();
 };
 
 #endif 

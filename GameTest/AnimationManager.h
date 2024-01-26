@@ -5,7 +5,6 @@
 #include "app/app.h"
 #include "filePath.h"
 
-//const float cmath::PI = 3.14159265358979323846f;
 
 enum class AnimationSet
 {
@@ -40,12 +39,11 @@ public:
 	CSimpleSpritePtr GetSprite(SpriteType type);
 	void InitializePlayer();
 	void InitializeHammer();
-	void Initializebox();
+	void InitializeBox();
 
-	std::map<fs::path, std::string> mySpriteName;
 
 private:
-
+	std::map<fs::path, std::string> mySpriteName;
 	CSimpleSpritePtr player;
 	CSimpleSpritePtr sprite;
 	CSimpleSpritePtr box;

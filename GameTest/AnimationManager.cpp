@@ -43,7 +43,7 @@ void AnimationManager::InitializeHammer()
 
 }
 
-void AnimationManager::Initializebox()
+void AnimationManager::InitializeBox()
 {
     std::string& spriteName = mySpriteName[BOX];
     if (spriteName.empty()) {

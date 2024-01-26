@@ -22,12 +22,12 @@ using CSimpleSpritePtr = std::unique_ptr<CSimpleSprite>;
 
 class CollisionManager
 {
+
 public:
     CollisionManager(CSimpleSpritePtr& sprite);
+
     void UpdateBoundingBox(std::map<int,DimData>& frameDim, bool isPlayer);
-
     bool CheckCollision(const CollisionManager& other) const;
-
     const BoundingBox& GetBoundingBox() const;
 
 private:

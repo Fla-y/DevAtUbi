@@ -27,7 +27,6 @@ const fs::path BACKGROUND = ".\\TestData\\LabBackground.png";
 const fs::path FLOOR_TILE = ".\\TestData\\tiles\\IndustrialTile_73.png";
 
 //objects
-//const fs::path HEART = ".\\TestData\\Heart.png";
 const fs::path BOX = ".\\TestData\\Box3.png";
 
 //music and sounds

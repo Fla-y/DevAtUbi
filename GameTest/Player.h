@@ -10,10 +10,6 @@
 class Player {
 
 public:
-    float x, y;       // Player position
-    float velocityY;  // Vertical velocity
-    bool isJumping;  
-    float jumpVelocity;
     bool isAlive;
     bool onGround,isInvincible;
 
@@ -39,9 +35,12 @@ private:
     AnimationManager& animManager;
     CSimpleSpritePtr sprite;
     CollisionManager collisionManager;
-
     std::map<fs::path, std::string> mySpriteName;
 
+    float x, y;       // Player position
+    float velocityY;  // Vertical velocity
+    bool isJumping;
+    float jumpVelocity;
    
 
 };

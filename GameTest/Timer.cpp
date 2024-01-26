@@ -32,7 +32,7 @@ void Timer::print()
         auto currentTime = std::chrono::high_resolution_clock::now();
         auto elapsedTime = std::chrono::duration_cast<std::chrono::seconds>(currentTime - startTime).count();
         std::string timeString = "Time: " + std::to_string(elapsedTime) + " seconds";
-        App::Print(x, y, timeString.c_str(), 0.0f, 0.0f, 0.0f, GLUT_BITMAP_9_BY_15); // 0.0f->black
+        App::Print(x, y, timeString.c_str(), 0.0f, 0.0f, 0.0f, GLUT_BITMAP_9_BY_15); 
     }
     else {
         auto elapsedTime = std::chrono::duration_cast<std::chrono::seconds>(endTime - startTime).count();
