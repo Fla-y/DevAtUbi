@@ -28,7 +28,7 @@ const fs::path FLOOR_TILE = ".\\TestData\\tiles\\IndustrialTile_73.png";
 
 //objects
 //const fs::path HEART = ".\\TestData\\Heart.png";
-const fs::path HEALTH_POTION = ".\\TestData\\health.png";
+const fs::path BOX = ".\\TestData\\Box3.png";
 
 //music and sounds
 const fs::path YOU_ARE_DEAD = ".\\TestData\\sound\\death.wav";

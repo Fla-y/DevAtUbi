@@ -5,9 +5,9 @@
 //GROUND 150.0F
 
 Player::Player(LogUtility& logger, AnimationManager& animManager, bool& isInitSuccessful) : logger(logger), animManager(animManager),
-isJumping(false), x(400.0f), y(400.0f), velocityY(0.0f),maxHeight(100.0f),
+isJumping(false), x(400.0f), y(400.0f), velocityY(0.0f),
 jumpVelocity(4.0f), sprite(animManager.GetSprite(SpriteType::PLAYER)),
-collisionManager(sprite), isAlive(true),onGround(true)
+collisionManager(sprite), isAlive(true),onGround(true),isInvincible(false)
 {
     if (sprite == nullptr) {
         std::cerr << "Error: Failed to initialize player character." << std::endl;
@@ -42,19 +42,40 @@ void Player::Move(float deltaTime) {
     sprite->Update(deltaTime);
 
     if (App::GetController().GetLeftThumbStickX() > 0.5f) {
-        sprite->SetAnimation(static_cast<int>(AnimationSet::WALK_FASTER));
-        sprite->GetPosition(x, y);
-        x += 2.0f;
-        sprite->SetPosition(x, y);
+        if (isInvincible) {
+            sprite->SetAnimation(static_cast<int>(AnimationSet::POWER_UP));
+            sprite->GetPosition(x, y);
+            x += 2.0f;
+            sprite->SetPosition(x, y);
+        }
+        else {
+            sprite->SetAnimation(static_cast<int>(AnimationSet::WALK_FASTER));
+            sprite->GetPosition(x, y);
+            x += 2.0f;
+            sprite->SetPosition(x, y);
+        }
     }
     else if (App::GetController().GetLeftThumbStickX() < -0.5f) {
-        sprite->SetAnimation(static_cast<int>(AnimationSet::WALK_BACK));
-        sprite->GetPosition(x, y);
-        x -= 2.2f;
-        sprite->SetPosition(x, y);
+        if (isInvincible) {
+            sprite->SetAnimation(static_cast<int>(AnimationSet::POWER_UP));
+            sprite->GetPosition(x, y);
+            x -= 2.0f;
+            sprite->SetPosition(x, y);
+        }
+        else {
+            sprite->SetAnimation(static_cast<int>(AnimationSet::WALK_BACK));
+            sprite->GetPosition(x, y);
+            x -= 2.2f;
+            sprite->SetPosition(x, y);
+        }
     }
-    else
-        sprite->SetAnimation(static_cast<int>(AnimationSet::WALK)); 
+    else {
+        if (isInvincible)
+            sprite->SetAnimation(static_cast<int>(AnimationSet::POWER_UP));
+        else {
+            sprite->SetAnimation(static_cast<int>(AnimationSet::WALK));
+        }
+    }
 
     if (App::GetController().GetLeftThumbStickY() > 0.5f && !isJumping && onGround) {
         StartJump();
@@ -101,8 +122,17 @@ bool Player::CheckCollision(const CollisionManager& other) const {
 
 void Player::TriggerDeath()
 {
-    isAlive = false;
-    sprite->SetAnimation(static_cast<int>(AnimationSet::DEATH));
+    if (!isInvincible) {
+        isAlive = false;
+        sprite->SetAnimation(static_cast<int>(AnimationSet::DEATH));
+    }
+}
+
+void Player::TriggerPowerUp()
+{
+    isInvincible = true;
+    startTime = std::chrono::steady_clock::now(); 
+    sprite->SetAnimation(static_cast<int>(AnimationSet::POWER_UP));
 }
 
 void Player::StartJump() {

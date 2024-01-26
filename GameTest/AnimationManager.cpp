@@ -43,6 +43,17 @@ void AnimationManager::InitializeHammer()
 
 }
 
+void AnimationManager::Initializebox()
+{
+    std::string& spriteName = mySpriteName[BOX];
+    if (spriteName.empty()) {
+        spriteName = BOX.string();
+    }
+    box.reset(App::CreateSprite(spriteName.c_str(), 1, 1));
+    box->SetScale(2.0f);
+    box->SetPosition(1024.0f, 420.0f);
+}
+
 CSimpleSpritePtr AnimationManager::GetSprite(SpriteType type) {
 
     switch (type)
@@ -51,6 +62,8 @@ CSimpleSpritePtr AnimationManager::GetSprite(SpriteType type) {
         return std::move(player);
     case SpriteType::HAMMER:
         return std::move(sprite);
+    case SpriteType::BOX:
+        return std::move(box);
     default:
         return nullptr;
     }

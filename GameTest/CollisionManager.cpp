@@ -13,7 +13,7 @@ void CollisionManager::UpdateBoundingBox(std::map<int,DimData>& frameDim, bool i
         width = frameDim.at(0).width;
         height = frameDim.at(0).height;
     }
-    else {
+    else { 
         width = frameDim.at(mySprite->GetFrame()).width;
         height = frameDim.at(mySprite->GetFrame()).height;
     }

@@ -4,7 +4,6 @@
 #include "stdafx.h"
 #include "app/app.h"
 #include "filePath.h"
-#include <cmath>
 
 //const float cmath::PI = 3.14159265358979323846f;
 
@@ -26,6 +25,7 @@ enum class SpriteType
 {
 	PLAYER,
 	HAMMER,
+	BOX,
 };
 
 using CSimpleSpritePtr = std::unique_ptr<CSimpleSprite>;
@@ -40,6 +40,7 @@ public:
 	CSimpleSpritePtr GetSprite(SpriteType type);
 	void InitializePlayer();
 	void InitializeHammer();
+	void Initializebox();
 
 	std::map<fs::path, std::string> mySpriteName;
 
@@ -47,6 +48,7 @@ private:
 
 	CSimpleSpritePtr player;
 	CSimpleSpritePtr sprite;
+	CSimpleSpritePtr box;
 };
 
 #endif

@@ -15,9 +15,10 @@ public:
     bool isJumping;  
     float jumpVelocity;
     bool isAlive;
-    float height, width,maxHeight;
-    bool onGround;
+    bool onGround,isInvincible;
 
+    std::chrono::steady_clock::time_point startTime;
+    const std::chrono::seconds duration{ 5 };
 
     Player(LogUtility& logger, AnimationManager& animManager,bool& isInitSuccessful);
     ~Player();
@@ -27,9 +28,8 @@ public:
     void StartJump();
     void Draw();
     bool CheckCollision(const CollisionManager& other) const;
-    //void Update(float deltaTime);
     void TriggerDeath();
-    //void ReturnToIdle();
+    void TriggerPowerUp();
 
 private:
     using CSimpleSpritePtr = std::unique_ptr<CSimpleSprite>;
@@ -41,6 +41,7 @@ private:
     CollisionManager collisionManager;
 
     std::map<fs::path, std::string> mySpriteName;
+
    
 
 };

@@ -9,7 +9,7 @@ Obstacle::Obstacle(LogUtility& logger, AnimationManager& animManager, bool& isIn
     if (hammer == nullptr) {
         std::cerr << "Error: Failed to initialize hammer." << std::endl;
         logger.LogError("Hammer initialization failed.");
-        bool isInitSuccesful = false;
+        isInitSuccessful = false;
     }
     InitializeFrameDim();
 }
@@ -29,7 +29,7 @@ void Obstacle::Animate(float deltaTime)
     hammerCollision.UpdateBoundingBox(frameDimensions, false);
     //check if hammer is off screen
     if (newX + hammer->GetWidth() < 0) {
-        RandomizeObstacle(y);
+        RandomizeObstacle();
         counter++;
         copyCounter++;
         if (copyCounter >= 3) {
@@ -74,7 +74,7 @@ void Obstacle::InitializeFrameDim()
     frameDimensions[7] = { temp->GetHeight(),temp->GetWidth() };
 }
 
-void Obstacle::RandomizeObstacle(float y) {
+void Obstacle::RandomizeObstacle() {
     std::random_device rd;  
     std::mt19937 gen(rd()); 
     std::uniform_int_distribution<> distrib(0, 8); 
@@ -84,7 +84,7 @@ void Obstacle::RandomizeObstacle(float y) {
     if (randomNumber == 5) {
         hammer->SetScale(5.0f);
         hammer->SetAngle(3.14159f);
-        hammer->SetPosition(HAMMERX, 98.0f);
+        hammer->SetPosition(HAMMERX, HAMMERY);
     }
     else if (randomNumber == 3) {
         hammer->SetScale(8.0f);
@@ -94,6 +94,6 @@ void Obstacle::RandomizeObstacle(float y) {
     else {
         hammer->SetScale(3.0f);
         hammer->SetAngle(3.14159f);
-        hammer->SetPosition(HAMMERX, 98.0f);
+        hammer->SetPosition(HAMMERX, HAMMERY);
     }
 }

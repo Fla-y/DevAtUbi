@@ -7,7 +7,9 @@
 #include "AnimationManager.h"
 #include "LogUtility.h"
 #include "CollisionManager.h"
+#include "Object.h"
 
+using CSimpleSpritePtr = std::unique_ptr<CSimpleSprite>;
 
 class Obstacle
 {
@@ -27,15 +29,13 @@ public:
 
 private:
 
-	using CSimpleSpritePtr = std::unique_ptr<CSimpleSprite>;
 	float& scrollSpeed;
 	LogUtility& logger;
 	AnimationManager& animManager;
-	//CSimpleSpritePtr hammer;
 	CollisionManager hammerCollision;
 	bool isActive;
 
-	void RandomizeObstacle(float y);
+	void RandomizeObstacle();
 	
 }; 
 
