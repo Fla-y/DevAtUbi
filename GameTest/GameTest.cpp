@@ -98,6 +98,10 @@ void Update(float deltaTime)
 			if (App::IsKeyPressed(VK_RETURN)) {
 				exit(0); // Close the game
 			}
+			else if (App::IsKeyPressed(VK_SPACE)){
+				startGame = false;
+				Init();
+			}
 		}
 	}
 }
@@ -114,6 +118,7 @@ void Render()
 		App::Print(420, 400, "You are dead", 1.0f, 1.0f, 1.0f, GLUT_BITMAP_9_BY_15);
 		std::string countStr = "Total Boxes collected: " + std::to_string(totalBox);
 		App::Print(380.0f, 380.0f, countStr.c_str(), 1.0f, 1.0f, 1.0f, GLUT_BITMAP_9_BY_15);
+		App::Print(220, 300, "Press the space bar to start again, or Enter to close the game", 1.0f, 1.0f, 1.0f, GLUT_BITMAP_9_BY_15);
 		return;
 	}
 	else {
@@ -122,7 +127,8 @@ void Render()
 		playerPtr->Draw();
 		levelMap->DrawFloor();
 		hammerPtr->Draw();
-		boxPtr->Draw();
+		if(!boxPtr->isCollected)
+			boxPtr->Draw();
 		gameTime.print();
 
 		std::string countStr = "Box collected: " + std::to_string(totalBox);

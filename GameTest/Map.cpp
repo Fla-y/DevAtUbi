@@ -73,7 +73,7 @@ void Map::Update(float deltaTime) {
 
 void Map::InitializeBackground(bool& isInitSuccessful)
 {
-    const int numBackgroundSprites = 10; // Including buffer sprite
+    const int numBackgroundSprites = 35; // Including buffer sprite
     for (int i = 0; i < numBackgroundSprites; ++i) {
 
         std::string& spriteName = mySpriteName[BACKGROUND];

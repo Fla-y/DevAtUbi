@@ -22,15 +22,13 @@
       <Filter>stb_image</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="FileReader.cpp" />
-    <ClCompile Include="LevelBuilder.cpp" />
     <ClCompile Include="AnimationManager.cpp" />
     <ClCompile Include="LogUtility.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Map.cpp" />
-    <ClCompile Include="ObjectPool.cpp" />
-    <ClCompile Include="GameStateManager.cpp" />
+    <ClCompile Include="Obstacle.cpp" />
+    <ClCompile Include="Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -59,16 +57,14 @@
       <Filter>stb_image</Filter>
     </ClInclude>
     <ClInclude Include="Player.h" />
-    <ClInclude Include="FileReader.h" />
-    <ClInclude Include="LevelBuilder.h" />
     <ClInclude Include="AnimationManager.h" />
     <ClInclude Include="filePath.h" />
     <ClInclude Include="LogUtility.h" />
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Map.h" />
-    <ClInclude Include="ObjectPool.h" />
-    <ClInclude Include="GameStateManager.h" />
+    <ClInclude Include="Obstacle.h" />
+    <ClInclude Include="Timer.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="NextAPI">
